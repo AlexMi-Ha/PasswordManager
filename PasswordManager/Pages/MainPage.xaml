@@ -1,14 +1,91 @@
-﻿<Page x:Class="PasswordManager.MainPage"
+﻿<local:BasePage x:TypeArguments="local:MainPageViewModel" x:Class="PasswordManager.MainPage"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp"
       xmlns:local="clr-namespace:PasswordManager"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="MainPage">
 
     <Grid>
+        <Grid.RowDefinitions>
+            <!-- Top Light Background bar-->
+            <RowDefinition Height="{Binding PageHeaderHeight, FallbackValue=30}"/>
+            <!-- Main Content -->
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <!-- Button Panel -->
+            <ColumnDefinition Width="Auto"/>
+            <!-- Data Panel -->
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- Top Header -->
+        <Border Grid.Row="0" Grid.ColumnSpan="2" Background="{StaticResource BackgroundLightBrush}" />
+
+        <!-- Button Panel -->
+        <Grid Grid.Column="0" Grid.Row="1" Background="{StaticResource BackgroundLightBrush}">
+            <Grid.RowDefinitions>
+                <!-- Top Butons -->
+                <RowDefinition Height="*"/>
+                <!-- Account Button -->
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            
+            <!-- Top Button Panel -->
+            <Border Padding="5" Grid.Row="0" Width="{Binding ButtonPanelWidth}">
+                <StackPanel Orientation="Vertical" >
+                    
+                    <!-- Search Password Button -->
+                    <Button Command="{Binding SearchPasswordCommand}" Style="{StaticResource MenuPanelButton}" Tag="Search Password" >
+                        <Button.Content>
+                            <fa:IconBlock Icon="Search" Foreground="{StaticResource TextForegroundLightBrush}"/>
+                        </Button.Content>
+                    </Button>
+                    
+                    <!-- Add Password Button -->
+                    <Button Command="{Binding AddPasswordCommand}" Style="{StaticResource MenuPanelButton}" Tag="Add Password" >
+                        <Button.Content>
+                            <fa:IconBlock Icon="plus" Foreground="{StaticResource TextForegroundLightBrush}"/>
+                        </Button.Content>
+                    </Button>
+                    
+                </StackPanel>
+            </Border>
+
+            <!-- Bottom Button Panel -->
+            <Border Padding="5" Grid.Row="1" Width="{Binding ButtonPanelWidth}">
+                <StackPanel Orientation="Vertical" VerticalAlignment="Bottom">
+                    
+                    <!-- Account Button -->
+                    <Button Command="{Binding AccountButtonCommand}" Margin="0,5,0,0" Style="{StaticResource MenuPanelButton}" Tag="Account" >
+                        <Button.Content>
+                            <fa:IconBlock Icon="User" Foreground="{StaticResource TextForegroundLightBrush}"/>
+                        </Button.Content>
+                    </Button>
+                    
+                </StackPanel>
+            </Border>
+
+        </Grid>
+    
+        <!-- Main Data Content Panel -->
+        <Grid Grid.Column="1" Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="{Binding StatusBarHeight, FallbackValue=22}" />
+            </Grid.RowDefinitions>
+            
+
+            <!-- Statusbar -->
+            <Border Background="{StaticResource ForegroundAccentBrush}" Grid.Row="1">
+                
+            </Border>
+        </Grid>
         
     </Grid>
-</Page>
+</local:BasePage>
