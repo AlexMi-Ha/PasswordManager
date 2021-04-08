@@ -69,6 +69,10 @@ namespace PasswordManager {
         public int TitleHeight { get; set; } = 25;
         public GridLength TitleHeightGridLength { get { return new GridLength(TitleHeight + ResizeBorder); } }
 
+        /// <summary>
+        /// The current Page of the Application
+        /// </summary>
+        public ApplicationPage CurrentPage { get; set; } = ApplicationPage.MainPage;
 
         #endregion
 

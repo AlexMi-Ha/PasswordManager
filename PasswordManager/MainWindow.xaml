@@ -90,6 +90,6 @@
     </WindowChrome.WindowChrome>
 
     <Grid>
-        <TextBlock Text="Jo Bros" FontSize="70" />
+        <Frame x:Name="MainFrame" Content="{Binding CurrentPage, Converter={local:ApplicationPageValueConverter}}" />
     </Grid>
 </Window>
