@@ -5,7 +5,9 @@
     <Color x:Key="BackgroundDark">#181818</Color>
     <Color x:Key="BackgroundLight">#202020</Color>
     <Color x:Key="ButtonBackground">#313131</Color>
-    
+
+    <Color x:Key="TitlebarBackground">#262626</Color>
+
     <Color x:Key="ForegroundSelectionDark">#1f1f1f</Color>
     <Color x:Key="ForegroundSelectionLight">#424242</Color>
     <Color x:Key="Alert">#f04747</Color>
@@ -18,7 +20,9 @@
     <SolidColorBrush x:Key="BackgroundDarkBrush" Color="{StaticResource BackgroundDark}" />
     <SolidColorBrush x:Key="BackgroundLightBrush" Color="{StaticResource BackgroundLight}" />
     <SolidColorBrush x:Key="ButtonBackgroundBrush" Color="{StaticResource ButtonBackground}" />
-                 
+
+    <SolidColorBrush x:Key="TitlebarBackgroundBrush" Color="{StaticResource TitlebarBackground}" />
+
     <SolidColorBrush x:Key="ForegroundSelectionDarkBrush" Color="{StaticResource ForegroundSelectionDark}" />
     <SolidColorBrush x:Key="ForegroundSelectionLightBrush" Color="{StaticResource ForegroundSelectionLight}" />
     <SolidColorBrush x:Key="AlertBrush" Color="{StaticResource Alert}" />

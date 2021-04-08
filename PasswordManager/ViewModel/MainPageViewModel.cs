@@ -15,7 +15,7 @@ namespace PasswordManager {
         /// <summary>
         /// Height of the Page Header
         /// </summary>
-        public int PageHeaderHeight { get; set; } = 30;
+        public int PageHeaderHeight { get; set; } = 0;
 
         /// <summary>
         /// Width of the Button Side Panel
