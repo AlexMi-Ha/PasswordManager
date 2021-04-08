@@ -6,9 +6,90 @@
         xmlns:local="clr-namespace:PasswordManager"
         mc:Ignorable="d"
         WindowStyle="None"
+        WindowStartupLocation="CenterScreen"
         AllowsTransparency="True"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
+        x:Name="AppWindow"
+        MinWidth="{Binding MinimumWindowWidth}"
+        MinHeight="{Binding MinimumWindowHeight}"
+        Title="Password Manager" Height="600" Width="1000">
 
+    <Window.Resources>
+        <Style TargetType="{x:Type local:MainWindow}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Window}">
+                        <!-- Outer border with dropshadow margin-->
+                        <Border Padding="{Binding OuterMarginSizeThickness, FallbackValue=10}">
+                            <!-- Main Window Outline and drop Shadow-->
+                            <Grid>
+                                <!-- Drop Shadow -->
+                                <Border Background="{StaticResource BackgroundDarkBrush}">
+                                    <Border.Effect>
+                                        <DropShadowEffect ShadowDepth="0" Opacity="0.75"/>
+                                    </Border.Effect>
+                                </Border>
+                                
+                                <!-- Main Window content-->
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <!-- Titlebar -->
+                                        <RowDefinition Height="{Binding TitleHeightGridLength}" />
+                                        <!-- Window Content -->
+                                        <RowDefinition Height="*" />
+                                    </Grid.RowDefinitions>
+                                    
+                                    <!-- Title Bar -->
+                                    <Grid Grid.Column="0" Panel.ZIndex="1">
+                                        <Grid.ColumnDefinitions>
+                                            <!-- Icon and Title-->
+                                            <ColumnDefinition Width="*"/>
+                                            <!-- Buttons-->
+                                            <ColumnDefinition Width="Auto"/>
+                                        </Grid.ColumnDefinitions>
+
+                                        <StackPanel Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Left">
+                                            <!-- Icon -->
+                                            <Button Command="{Binding MenuCommand}" Style="{StaticResource SystemIconButton}" Margin="10,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Width="25" Height="25">
+                                                <Image Source="/Images/Icon/icon-small.png" />
+                                            </Button>
+                                        
+                                            <!-- Title Text -->
+                                            <Viewbox Margin="5,0,0,0" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center">
+                                                <TextBlock Margin="5" Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Title}" />
+                                            </Viewbox>
+                                        </StackPanel>
+                                        
+                                        <!-- Window Buttons -->
+                                        <StackPanel Grid.Column="1" Orientation="Horizontal">
+                                            <Button Command="{Binding MinimizeCommand}" Width="{Binding TitleHeight}" Margin="0,0,2,5" Style="{StaticResource WindowControlButton}" Content="-" VerticalAlignment="Center" />
+                                            <Button Command="{Binding MaximizeCommand}" Width="{Binding TitleHeight}" Margin="0,0,2,5" Style="{StaticResource WindowControlButton}" Content="[ ]" VerticalAlignment="Center" />
+                                            <Button Command="{Binding CloseCommand}" Width="{Binding TitleHeight}" Margin="0,0,2,5" Style="{StaticResource WindowControlCloseButton}" Content="X" VerticalAlignment="Center" />
+                                        </StackPanel>
+                                    </Grid>
+                                    
+                                    <!-- Page Content -->
+                                    <Border Grid.Row="1" Padding="{Binding InnerContentPadding}">
+                                        <ContentPresenter Content="{TemplateBinding Content}" />
+                                    </Border>
+                                </Grid>
+                            </Grid>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+    
+    <WindowChrome.WindowChrome>
+        <WindowChrome 
+            ResizeBorderThickness="{Binding ResizeBorderThickness}"
+            CaptionHeight="{Binding TitleHeight}"
+            GlassFrameThickness="0"
+            CornerRadius="0"
+            />
+    </WindowChrome.WindowChrome>
+
+    <Grid>
+        <TextBlock Text="Jo Bros" FontSize="70" />
     </Grid>
 </Window>

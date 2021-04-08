@@ -7,7 +7,6 @@ namespace PasswordManager {
     /// Base class for all ViewModels
     /// This Automatically handles all Property Changed Updates
     /// </summary>
-    [AddINotifyPropertyChangedInterface]
     public class BaseViewModel : INotifyPropertyChanged {
         public event PropertyChangedEventHandler PropertyChanged = (sender, e) => { };
 
