@@ -80,8 +80,17 @@
                 <RowDefinition Height="{Binding StatusBarHeight, FallbackValue=22}" />
             </Grid.RowDefinitions>
 
+            <!-- Main Data List Box -->
             <Border Grid.Row="0" Padding="0,5,0,5">
-                <ListBox Background="{StaticResource BackgroundDarkBrush}" ItemsSource="{Binding Accounts}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" BorderThickness="0"/>
+                <!-- Bound to the View Model of the PasswordListItem-->
+                <ListBox Background="{StaticResource BackgroundDarkBrush}" ItemsSource="{Binding Accounts}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" BorderThickness="0">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <!-- Use the custom UserControl as ItemTemplate-->
+                            <local:PasswordListItem/>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
             </Border>
 
             <!-- Statusbar -->

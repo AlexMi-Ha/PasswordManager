@@ -30,7 +30,7 @@ namespace PasswordManager {
         public int StatusBarHeight { get; set; } = 22;
         #endregion
 
-        public ObservableCollection<PasswordListItem> Accounts { get; set; }
+        public ObservableCollection<PasswordListItemViewModel> Accounts { get; set; }
 
         #region Commands
 
@@ -61,14 +61,14 @@ namespace PasswordManager {
             AddPasswordCommand = new RelayCommand(() => { MessageBox.Show("TODO"); });
             AccountButtonCommand = new RelayCommand(() => { MessageBox.Show("TODO"); });
 
-            Accounts = new ObservableCollection<PasswordListItem>();
+            Accounts = new ObservableCollection<PasswordListItemViewModel>();
 
-            Accounts.Add(new PasswordListItem());
-            Accounts.Add(new PasswordListItem());
-            Accounts.Add(new PasswordListItem());
-            Accounts.Add(new PasswordListItem());
-            Accounts.Add(new PasswordListItem());
-            Accounts.Add(new PasswordListItem());
+            Accounts.Add(new PasswordListItemViewModel());
+            Accounts.Add(new PasswordListItemViewModel());
+            Accounts.Add(new PasswordListItemViewModel());
+            Accounts.Add(new PasswordListItemViewModel());
+            Accounts.Add(new PasswordListItemViewModel());
+            Accounts.Add(new PasswordListItemViewModel());
         }
         #endregion
 
