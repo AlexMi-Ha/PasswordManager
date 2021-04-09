@@ -12,6 +12,8 @@ namespace PasswordManager {
 
         public override object Convert(object value, Type targetType, object parameter, CultureInfo culture) {
             switch((ApplicationPage)value) {
+                case ApplicationPage.Login:
+                    return new LoginPage();
                 case ApplicationPage.MainPage:
                     return new MainPage();
                 default:

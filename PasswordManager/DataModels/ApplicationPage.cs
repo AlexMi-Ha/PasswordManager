@@ -3,6 +3,7 @@
     /// A page of  the application
     /// </summary>
     public enum ApplicationPage {
-        MainPage = 0,
+        Login = 0,
+        MainPage = 1,
     }
 }

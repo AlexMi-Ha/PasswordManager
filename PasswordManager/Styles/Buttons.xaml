@@ -8,6 +8,7 @@
         <ResourceDictionary Source="Fonts.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
+    
     <!-- Hoverless button -->
     <Style TargetType="{x:Type Button}" x:Key="Hoverless">
         <Setter Property="Background" Value="Transparent" />
@@ -60,7 +61,36 @@
             </Trigger>
         </Style.Triggers>
     </Style>
-    
+
+    <!-- Login Button -->
+    <Style TargetType="{x:Type Button}" x:Key="LoginButton" BasedOn="{StaticResource BaseStyle}">
+        <Setter Property="Background" Value="{StaticResource ButtonBackgroundBrush}" />
+        <Setter Property="Foreground" Value="{StaticResource TextForegroundLightBrush}" />
+        <Setter Property="Margin" Value="0 20" />
+        <Setter Property="FontSize" Value="30" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="Padding" Value="50 10 50 5" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ButtonBase}">
+                    <Border x:Name="border" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" SnapsToDevicePixels="True">
+                        <TextBlock Text="{TemplateBinding Content}" Focusable="False" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" Value="{StaticResource ForegroundSelectionLightBrush}"/>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Background" Value="{StaticResource TextForegroundDarkBrush}"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
     <!-- Menu Panel Button -->
     <Style TargetType="{x:Type Button}" x:Key="MenuPanelButton" BasedOn="{StaticResource BaseStyle}">
         <Setter Property="Background" Value="{StaticResource ButtonBackgroundBrush}" />

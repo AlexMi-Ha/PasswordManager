@@ -72,7 +72,7 @@ namespace PasswordManager {
         /// <summary>
         /// The current Page of the Application
         /// </summary>
-        public ApplicationPage CurrentPage { get; set; } = ApplicationPage.MainPage;
+        public ApplicationPage CurrentPage { get; set; } = ApplicationPage.Login;
 
         #endregion
 
