@@ -1,4 +1,6 @@
-﻿using System.Windows.Input;
+﻿using System.Collections.ObjectModel;
+using System.Windows;
+using System.Windows.Input;
 
 namespace PasswordManager {
     /// <summary>
@@ -28,6 +30,8 @@ namespace PasswordManager {
         public int StatusBarHeight { get; set; } = 22;
         #endregion
 
+        public ObservableCollection<PasswordListItem> Accounts { get; set; }
+
         #region Commands
 
         /// <summary>
@@ -53,10 +57,18 @@ namespace PasswordManager {
         public MainPageViewModel() {
 
             // Initialize the Commands
-            SearchPasswordCommand = new RelayCommand(() => { });
-            AddPasswordCommand = new RelayCommand(() => { });
-            AccountButtonCommand = new RelayCommand(() => { });
+            SearchPasswordCommand = new RelayCommand(() => { MessageBox.Show("TODO"); });
+            AddPasswordCommand = new RelayCommand(() => { MessageBox.Show("TODO"); });
+            AccountButtonCommand = new RelayCommand(() => { MessageBox.Show("TODO"); });
 
+            Accounts = new ObservableCollection<PasswordListItem>();
+
+            Accounts.Add(new PasswordListItem());
+            Accounts.Add(new PasswordListItem());
+            Accounts.Add(new PasswordListItem());
+            Accounts.Add(new PasswordListItem());
+            Accounts.Add(new PasswordListItem());
+            Accounts.Add(new PasswordListItem());
         }
         #endregion
 

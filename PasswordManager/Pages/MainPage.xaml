@@ -79,7 +79,10 @@
                 <RowDefinition Height="*" />
                 <RowDefinition Height="{Binding StatusBarHeight, FallbackValue=22}" />
             </Grid.RowDefinitions>
-            
+
+            <Border Grid.Row="0" Padding="0,5,0,5">
+                <ListBox Background="{StaticResource BackgroundDarkBrush}" ItemsSource="{Binding Accounts}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" BorderThickness="0"/>
+            </Border>
 
             <!-- Statusbar -->
             <Border Background="{StaticResource ForegroundAccentBrush}" Grid.Row="1">

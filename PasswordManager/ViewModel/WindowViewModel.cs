@@ -106,6 +106,9 @@ namespace PasswordManager {
             window.StateChanged += (sender, e) => {
                 WindowResized();
             };
+            window.Closed += (sender, e) => {
+                Environment.Exit(0);
+            };
 
             // Create Commands
             MinimizeCommand = new RelayCommand(() => window.WindowState = WindowState.Minimized);
