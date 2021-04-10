@@ -17,11 +17,11 @@ namespace PasswordManager {
         /// <summary>
         /// The Name of this AccountItem
         /// </summary>
-        public string AccountName { get; set; } = "Account";
+        public string AccountName { get; set; }
         /// <summary>
         /// Email of this AccountItem
         /// </summary>
-        public string Email { get; set; } = "Email";
+        public string Email { get; set; }
         /// <summary>
         /// Username of this AccountItem
         /// </summary>

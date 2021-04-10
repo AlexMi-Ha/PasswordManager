@@ -6,6 +6,7 @@
       xmlns:local="clr-namespace:PasswordManager"
       mc:Ignorable="d" 
       d:DesignHeight="700" d:DesignWidth="700"
+      x:Name="Page"
       Title="LoginPage">
 
     <Grid Background="{StaticResource BackgroundDarkBrush}">
@@ -15,13 +16,13 @@
                 <!-- Main Login Content -->
                 <Border BorderThickness="0" CornerRadius="5" Background="{StaticResource BackgroundLightBrush}" Padding="15 15 15 15" Width="400" Margin="50 50 50 0">
                     <StackPanel>
-                        <TextBlock Text="Login" FontSize="40" Margin="0 20"/>
+                        <TextBlock Text="Login" FontSize="35" Margin="0 20"/>
                         
                         <!-- Master Password Box -->
-                        <PasswordBox Style="{DynamicResource PasswordBoxPreview}" Tag="Password"/>
-                         
+                        <PasswordBox x:Name="PasswordText" Style="{DynamicResource PasswordBoxPreview}" Tag="Password" />
+
                         <!-- Button to login -->
-                        <Button Command="LoginCommand" Style="{StaticResource LoginButton}" Content="Confirm" HorizontalAlignment="Center"/>
+                        <Button IsDefault="True" local:IsBusyProperty.Value="{Binding LoginIsRunning}" Command="{Binding LoginCommand}" CommandParameter="{Binding ElementName=Page}"  Style="{StaticResource LoginButton}" Content="Confirm" HorizontalAlignment="Center"/>
                     </StackPanel>
                 </Border>
             </StackPanel>

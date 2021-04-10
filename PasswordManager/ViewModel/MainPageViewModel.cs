@@ -63,12 +63,12 @@ namespace PasswordManager {
 
             Accounts = new ObservableCollection<PasswordListItemViewModel>();
 
-            Accounts.Add(new PasswordListItemViewModel());
-            Accounts.Add(new PasswordListItemViewModel());
-            Accounts.Add(new PasswordListItemViewModel());
-            Accounts.Add(new PasswordListItemViewModel());
-            Accounts.Add(new PasswordListItemViewModel());
-            Accounts.Add(new PasswordListItemViewModel());
+            Accounts.Add(new PasswordListItemViewModel() { AccountName ="Bros", Email="bros@Bro.com"});
+            Accounts.Add(new PasswordListItemViewModel() { AccountName="JuttaEureLehrerin", Email="jutta.EureLehrerin@gmail.com"});
+            Accounts.Add(new PasswordListItemViewModel() { AccountName="foo3", Email="foo@bar3.de"});
+            Accounts.Add(new PasswordListItemViewModel() { AccountName = "foo4", Email = "foo@bar4.tk" });
+            Accounts.Add(new PasswordListItemViewModel() { AccountName = "foo5", Email = "foo@bar5.io" });
+            Accounts.Add(new PasswordListItemViewModel() { AccountName= "Daniel", Email = "Daniel@Stinkt.bah"});
         }
         #endregion
 
