@@ -3,7 +3,7 @@ using System.Security;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
-namespace PasswordManager {
+namespace PasswordManager.Core {
     public class LoginPageViewModel : BaseViewModel {
 
 
@@ -25,7 +25,7 @@ namespace PasswordManager {
 
         #region Contructor
         public LoginPageViewModel() {
-            LoginCommand = new RelayParameterizedCommand(async (parameter) => await Login(parameter));
+            LoginCommand = new RelayParameterizedCommand(async (parameter) => await LoginAsync(parameter));
         }
         #endregion
 
@@ -35,7 +35,7 @@ namespace PasswordManager {
         /// </summary>
         /// <param name="parameter"></param>
         /// <returns>SecureString passed in from the view</returns>
-        public async Task Login(object parameter) {
+        public async Task LoginAsync(object parameter) {
 
             await RunCommandAsync(() => this.LoginIsRunning, async () => {
 

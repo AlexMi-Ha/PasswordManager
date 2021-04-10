@@ -4,7 +4,7 @@ using System.ComponentModel;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 
-namespace PasswordManager {
+namespace PasswordManager.Core {
 
     /// <summary>
     /// Base class for all ViewModels

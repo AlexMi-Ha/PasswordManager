@@ -105,6 +105,6 @@
     </WindowChrome.WindowChrome>
 
     <Grid>
-        <Frame x:Name="MainFrame" Content="{Binding CurrentPage, Converter={local:ApplicationPageValueConverter}}" />
+        <Frame x:Name="MainFrame" Content="{Binding ApplicationViewModel.CurrentPage, ElementName=AppWindow, Converter={local:ApplicationPageValueConverter}}" />
     </Grid>
 </Window>

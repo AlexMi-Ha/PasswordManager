@@ -1,4 +1,6 @@
-﻿namespace PasswordManager {
+﻿using PasswordManager.Core;
+
+namespace PasswordManager {
     /// <summary>
     /// Interaction logic for MainPage.xaml
     /// </summary>

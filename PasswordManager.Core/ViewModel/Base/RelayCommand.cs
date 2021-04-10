@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Windows.Input;
 
-namespace PasswordManager {
+namespace PasswordManager.Core {
     /// <summary>
     /// Relay Command to run an action
     /// </summary>
-    class RelayCommand : ICommand {
+    public class RelayCommand : ICommand {
 
         #region Public Events
 

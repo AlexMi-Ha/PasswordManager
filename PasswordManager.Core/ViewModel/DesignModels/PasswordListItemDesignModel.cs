@@ -1,5 +1,5 @@
 ﻿
-namespace PasswordManager {
+namespace PasswordManager.Core {
     public class PasswordListItemDesignModel : PasswordListItemViewModel {
 
         #region Singleton

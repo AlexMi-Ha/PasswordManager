@@ -2,7 +2,7 @@
 using System.Linq.Expressions;
 using System.Reflection;
 
-namespace PasswordManager {
+namespace PasswordManager.Core {
     /// <summary>
     /// A helper for expressions
     /// </summary>

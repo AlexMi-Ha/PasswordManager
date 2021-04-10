@@ -4,7 +4,7 @@ using System.Text;
 using System.Windows;
 using System.Windows.Input;
 
-namespace PasswordManager {
+namespace PasswordManager.Core {
     public class PasswordListItemViewModel : BaseViewModel {
 
         #region Public Properties
@@ -53,9 +53,9 @@ namespace PasswordManager {
         /// </summary>
         public PasswordListItemViewModel() {
             // Initialize the Commands
-            CopyPasswordCommand = new RelayCommand(() => { MessageBox.Show("TODO"); });
-            EditAccountCommand = new RelayCommand(() => { MessageBox.Show("TODO"); });
-            DeleteAccountCommand = new RelayCommand(() => { MessageBox.Show("TODO"); });
+            CopyPasswordCommand = new RelayCommand(() => { Console.WriteLine("TODO"); });
+            EditAccountCommand = new RelayCommand(() => { Console.WriteLine("TODO"); });
+            DeleteAccountCommand = new RelayCommand(() => { Console.WriteLine("TODO"); });
 
         }
         #endregion

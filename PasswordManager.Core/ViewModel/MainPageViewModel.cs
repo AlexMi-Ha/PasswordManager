@@ -1,8 +1,9 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Input;
 
-namespace PasswordManager {
+namespace PasswordManager.Core {
     /// <summary>
     /// View Model for the main page of the application
     /// </summary>
@@ -57,9 +58,9 @@ namespace PasswordManager {
         public MainPageViewModel() {
 
             // Initialize the Commands
-            SearchPasswordCommand = new RelayCommand(() => { MessageBox.Show("TODO"); });
-            AddPasswordCommand = new RelayCommand(() => { MessageBox.Show("TODO"); });
-            AccountButtonCommand = new RelayCommand(() => { MessageBox.Show("TODO"); });
+            SearchPasswordCommand = new RelayCommand(() => { Console.WriteLine("TODO"); });
+            AddPasswordCommand = new RelayCommand(() => { Console.WriteLine("TODO"); });
+            AccountButtonCommand = new RelayCommand(() => { Console.WriteLine("TODO"); });
 
             Accounts = new ObservableCollection<PasswordListItemViewModel>();
 

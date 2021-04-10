@@ -1,8 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using PasswordManager.Core;
+using System;
 using System.Diagnostics;
 using System.Globalization;
-using System.Text;
 
 namespace PasswordManager {
     /// <summary>

@@ -1,10 +1,11 @@
-﻿<local:BasePage x:TypeArguments="local:MainPageViewModel" x:Class="PasswordManager.MainPage"
+﻿<local:BasePage x:TypeArguments="core:MainPageViewModel" x:Class="PasswordManager.MainPage"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp"
       xmlns:local="clr-namespace:PasswordManager"
+      xmlns:core="clr-namespace:PasswordManager.Core"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="MainPage">

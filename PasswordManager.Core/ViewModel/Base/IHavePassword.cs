@@ -1,7 +1,7 @@
 ﻿
 using System.Security;
 
-namespace PasswordManager {
+namespace PasswordManager.Core {
 
     /// <summary>
     /// Interface for a class that can provide a secure password

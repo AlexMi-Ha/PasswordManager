@@ -2,7 +2,7 @@
 using System.Runtime.InteropServices;
 using System.Security;
 
-namespace PasswordManager {
+namespace PasswordManager.Core {
     /// <summary>
     /// Helpers for the SecureString class
     /// </summary>

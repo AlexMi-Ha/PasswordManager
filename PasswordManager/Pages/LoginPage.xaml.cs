@@ -1,4 +1,5 @@
 ﻿
+using PasswordManager.Core;
 using System.Security;
 
 namespace PasswordManager {
