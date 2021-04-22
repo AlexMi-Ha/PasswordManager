@@ -5,14 +5,17 @@ using System.Windows;
 using System.Windows.Input;
 
 namespace PasswordManager.Core {
-    public class PasswordListItemViewModel : BaseViewModel {
+    /// <summary>
+    /// Viewmodel for a PasswordItem. Base class for the PasswordListItem Viewmodel and the Edit- and Add Viewmodel
+    /// </summary>
+    public class PasswordItemViewModel : BaseViewModel {
 
         #region Public Properties
 
         /// <summary>
         /// ID of this account in the database
         /// </summary>
-        public int ID { get; set; }
+        public string Id { get; set; }
 
         /// <summary>
         /// The Name of this AccountItem
@@ -31,31 +34,21 @@ namespace PasswordManager.Core {
         /// </summary>
         public string Website { get; set; }
         /// <summary>
+        /// Password of this Account (hashed)
+        /// </summary>
+        public string Password { get; set; }
+        /// <summary>
         /// Notes about this account
         /// </summary>
         public string Notes { get; set; }
-
-        /// <summary>
-        /// Date this Account was created
-        /// </summary>
-        public DateTime DateCreated { get; set; }
         #endregion
 
-        #region Commands
-        public ICommand CopyPasswordCommand { get; set; }
-        public ICommand EditAccountCommand { get; set; }
-        public ICommand DeleteAccountCommand { get; set; }
-        #endregion
 
         #region Constructor
         /// <summary>
         /// Default Constructor
         /// </summary>
-        public PasswordListItemViewModel() {
-            // Initialize the Commands
-            CopyPasswordCommand = new RelayCommand(() => { Console.WriteLine("TODO"); });
-            EditAccountCommand = new RelayCommand(() => { Console.WriteLine("TODO"); });
-            DeleteAccountCommand = new RelayCommand(() => { Console.WriteLine("TODO"); });
+        public PasswordItemViewModel() {
 
         }
         #endregion

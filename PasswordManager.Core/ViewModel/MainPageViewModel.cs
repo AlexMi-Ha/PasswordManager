@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 
@@ -58,8 +59,8 @@ namespace PasswordManager.Core {
         public MainPageViewModel() {
 
             // Initialize the Commands
-            SearchPasswordCommand = new RelayCommand(() => { Console.WriteLine("TODO"); });
-            AddPasswordCommand = new RelayCommand(() => { Console.WriteLine("TODO"); });
+            SearchPasswordCommand = new RelayCommand(async () => await SearchPassword());
+            AddPasswordCommand = new RelayCommand(async () => await AddPassword());
             AccountButtonCommand = new RelayCommand(() => { Console.WriteLine("TODO"); });
 
             Accounts = new ObservableCollection<PasswordListItemViewModel>();
@@ -71,6 +72,30 @@ namespace PasswordManager.Core {
             Accounts.Add(new PasswordListItemViewModel() { AccountName = "foo5", Email = "foo@bar5.io" });
             Accounts.Add(new PasswordListItemViewModel() { AccountName= "Daniel", Email = "Daniel@Stinkt.bah"});
         }
+        #endregion
+
+        #region Methods
+
+        /// <summary>
+        /// Method to Filter or search for specific passwords
+        /// </summary>
+        /// <returns></returns>
+        private async Task SearchPassword() {
+            await Task.Delay(1);
+            Console.WriteLine("TODO");
+        }
+
+        /// <summary>
+        /// Method to add a new password
+        /// </summary>
+        /// <returns></returns>
+        private async Task AddPassword() {
+            // TODO form to input the new data
+            
+
+        }
+
+
         #endregion
 
     }

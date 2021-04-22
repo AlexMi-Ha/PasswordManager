@@ -15,6 +15,11 @@ namespace PasswordManager {
         /// Fired when the value changes
         /// </summary>
         public event Action<DependencyObject, DependencyPropertyChangedEventArgs> ValueChanged = (sender, e) => { };
+
+        /// <summary>
+        /// Fired when the value changes, even when the value is the same
+        /// </summary>
+        public event Action<DependencyObject, object> ValueUpdated = (sender, value) => { };
         #endregion
 
         #region Public Properties
@@ -31,7 +36,30 @@ namespace PasswordManager {
         /// <summary>
         /// Attached Property for this class
         /// </summary>
-        public static readonly DependencyProperty ValueProperty = DependencyProperty.RegisterAttached("Value", typeof(Property), typeof(BaseAttachedProperty<Parent, Property>), new PropertyMetadata(new PropertyChangedCallback(OnValuePropertyChanged)));
+        public static readonly DependencyProperty ValueProperty = DependencyProperty.RegisterAttached(
+            "Value", 
+            typeof(Property),
+            typeof(BaseAttachedProperty<Parent, Property>),
+            new PropertyMetadata(
+                default(Property),
+                new PropertyChangedCallback(OnValuePropertyChanged),
+                new CoerceValueCallback(OnValuePropertyUpdated)
+                ));
+
+        /// <summary>
+        /// The callback event when the ValueProperty is changed, even if it is the same value
+        /// </summary>
+        /// <param name="d">UI Element that had its property changed</param>
+        /// <param name="value">The arguments for the event</param>
+        /// <returns></returns>
+        private static object OnValuePropertyUpdated(DependencyObject d, object value) {
+            // call listeners
+            Instance.OnValueUpdated(d, value);
+            Instance.ValueUpdated(d, value);
+
+            // return the value
+            return value;
+        }
 
         /// <summary>
         /// Callback event when the value is changed
@@ -70,6 +98,13 @@ namespace PasswordManager {
         /// <param name="sender">UI element that this property is changed for</param>
         /// <param name="e">The arguments for this event</param>
         public virtual void OnValueChanged(DependencyObject sender, DependencyPropertyChangedEventArgs e) { }
+
+        /// <summary>
+        /// The method that is called when any AttachedProperty of this type is changed, even if the value is the same
+        /// </summary>
+        /// <param name="sender">UI element that this property is changed for</param>
+        /// <param name="e">The arguments for this event</param>
+        public virtual void OnValueUpdated(DependencyObject sender, object value) { }
         #endregion
     }
 }
