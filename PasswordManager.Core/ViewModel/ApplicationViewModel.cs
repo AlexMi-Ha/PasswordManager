@@ -1,8 +1,4 @@
-﻿
-using System;
-using System.Threading.Tasks;
-
-namespace PasswordManager.Core {
+﻿namespace PasswordManager.Core {
     /// <summary>
     /// ApplicationState as a ViewModel
     /// </summary>
@@ -13,7 +9,7 @@ namespace PasswordManager.Core {
         /// <summary>
         /// The current Page of the Application
         /// </summary>
-        public ApplicationPage CurrentPage { get; private set; } = ApplicationPage.Login;
+        public ApplicationPage CurrentPage { get; private set; } = ApplicationPage.MainPage;
 
         #endregion
 

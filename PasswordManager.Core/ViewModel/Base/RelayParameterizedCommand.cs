@@ -5,7 +5,7 @@ namespace PasswordManager.Core {
     /// <summary>
     /// Relay Command to run an action
     /// </summary>
-    public class RelayParameterizedCommand : ICommand {
+    public class RelayParameterizedCommand<T> : ICommand {
 
         #region Public Events
 
@@ -17,11 +17,11 @@ namespace PasswordManager.Core {
         /// <summary>
         /// The action to run
         /// </summary>
-        private Action<object> action;
+        private Action<T> action;
         #endregion
 
         #region Constructor
-        public RelayParameterizedCommand(Action<object> action) {
+        public RelayParameterizedCommand(Action<T> action) {
             this.action = action;
         }
         #endregion
@@ -41,7 +41,7 @@ namespace PasswordManager.Core {
         /// </summary>
         /// <param name="parameter"></param>
         public void Execute(object parameter) {
-            action(parameter);
+            action((T)parameter);
         }
         #endregion
     }

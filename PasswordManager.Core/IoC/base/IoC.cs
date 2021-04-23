@@ -12,6 +12,15 @@ namespace PasswordManager.Core {
         /// </summary>
         public static IKernel Kernel { get; private set; } = new StandardKernel();
 
+        /// <summary>
+        /// Getter for the Application viewmodel
+        /// </summary>
+        public static ApplicationViewModel ApplicationViewModel => IoC.Get<ApplicationViewModel>();
+
+        /// <summary>
+        /// Getter for the IUIManager
+        /// </summary>
+        public static IUIManager UI => IoC.Get<IUIManager>();
 
         #region Construction
 
@@ -30,6 +39,7 @@ namespace PasswordManager.Core {
         private static void BindViewModels() {
             // Bind to a single instance of ApplicationViewModel
             Kernel.Bind<ApplicationViewModel>().ToConstant(new ApplicationViewModel());
+
 
         }
 

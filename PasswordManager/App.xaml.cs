@@ -1,4 +1,5 @@
 ﻿using PasswordManager.Core;
+using System;
 using System.Windows;
 
 namespace PasswordManager {
@@ -14,12 +15,23 @@ namespace PasswordManager {
         protected override void OnStartup(StartupEventArgs e) {
             base.OnStartup(e);
 
-            // Setup IoC
-            IoC.Setup();
+            // Setup the main application
+            ApplicationSetup();
 
             //Show the main window
             Current.MainWindow = new MainWindow();
             Current.MainWindow.Show();
+        }
+
+        /// <summary>
+        /// Configures our application ready for use
+        /// </summary>
+        private void ApplicationSetup() {
+            // Setup the IoC
+            IoC.Setup();
+
+            // Bind the UI Manager
+            IoC.Kernel.Bind<IUIManager>().ToConstant(new UIManager());
         }
     }
 }

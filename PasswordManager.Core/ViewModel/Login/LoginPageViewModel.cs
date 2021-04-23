@@ -29,7 +29,7 @@ namespace PasswordManager.Core {
 
         #region Contructor
         public LoginPageViewModel() {
-            LoginCommand = new RelayParameterizedCommand(async (parameter) => await LoginAsync(parameter));
+            LoginCommand = new RelayParameterizedCommand<IHavePassword>(async (parameter) => await LoginAsync(parameter));
         }
         #endregion
 
@@ -39,7 +39,7 @@ namespace PasswordManager.Core {
         /// </summary>
         /// <param name="parameter"></param>
         /// <returns>SecureString passed in from the view</returns>
-        public async Task LoginAsync(object parameter) {
+        public async Task LoginAsync(IHavePassword parameter) {
 
             await RunCommandAsync(() => this.LoginIsRunning, async () => {
 
@@ -49,7 +49,7 @@ namespace PasswordManager.Core {
                     ApiRoutes.ServerAdress + ApiRoutes.Login,
                     new LoginCredentialsApiModel { 
                         Email = "foo@bar.de",
-                        Password = (parameter as IHavePassword).SecurePassword.Unsecure(),
+                        Password = parameter.SecurePassword.Unsecure(),
                 });
 
                 // if the response has an error -> display it

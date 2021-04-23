@@ -6,7 +6,7 @@ using System.Windows.Input;
 
 namespace PasswordManager.Core {
     /// <summary>
-    /// Viewmodel for a PasswordItem. Base class for the PasswordListItem Viewmodel and the Edit- and Add Viewmodel
+    /// Viewmodel for a PasswordItem 
     /// </summary>
     public class PasswordItemViewModel : BaseViewModel {
 
@@ -34,7 +34,7 @@ namespace PasswordManager.Core {
         /// </summary>
         public string Website { get; set; }
         /// <summary>
-        /// Password of this Account (hashed)
+        /// Password of this Account
         /// </summary>
         public string Password { get; set; }
         /// <summary>

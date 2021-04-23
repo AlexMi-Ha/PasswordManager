@@ -8,7 +8,7 @@ namespace PasswordManager {
     /// <summary>
     /// ViewModel for the main Window
     /// </summary>
-    class WindowViewModel : BaseViewModel {
+    public class WindowViewModel : BaseViewModel {
 
         #region Private Attributes
         /// <summary>
@@ -101,7 +101,7 @@ namespace PasswordManager {
                 WindowResized();
             };
             window.Closed += (sender, e) => {
-                Environment.Exit(0);
+                window.Close();
             };
 
             // Create Commands

@@ -28,11 +28,31 @@
                 <ControlTemplate TargetType="{x:Type TextBoxBase}">
 
                     <Grid>
-                        <Border x:Name="border" Background="{TemplateBinding Background}" BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{TemplateBinding BorderBrush}" SnapsToDevicePixels="True">
-                            <ScrollViewer x:Name="PART_ContentHost" Focusable="false" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden"/>
-                        </Border>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
 
-                        <TextBlock IsHitTestVisible="False" Text="{TemplateBinding Tag}" FontSize="{TemplateBinding FontSize}" Background="transparent" x:Name="placeholder" Foreground="{StaticResource TextForegroundDarkBrush}" Padding="{TemplateBinding Padding}" VerticalAlignment="Center" HorizontalAlignment="{TemplateBinding HorizontalAlignment}">
+                        <Border Grid.Row="1"  x:Name="border" Background="{TemplateBinding Background}" BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{TemplateBinding BorderBrush}" SnapsToDevicePixels="True">
+                            <ScrollViewer Background="{TemplateBinding Background}" x:Name="PART_ContentHost" Focusable="false" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden"/>
+                        </Border>
+                        
+                        <TextBlock Grid.Row="0" Margin="10,0,10,-5" IsHitTestVisible="False" Text="{TemplateBinding Tag}" FontSize="12" Background="transparent" x:Name="placeholderSmall" Foreground="{StaticResource TextForegroundDarkBrush}" VerticalAlignment="Center" HorizontalAlignment="{TemplateBinding HorizontalAlignment}">
+                            <TextBlock.Style>
+                                <Style TargetType="{x:Type TextBlock}">
+                                    <Setter Property="Visibility" Value="Visible" />
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding Text, RelativeSource={RelativeSource TemplatedParent}}" Value="">
+                                            <Setter Property="Visibility" Value="Hidden"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBlock.Style>
+                        </TextBlock>
+
+                        
+
+                        <TextBlock Grid.Row="1" IsHitTestVisible="False" Text="{TemplateBinding Tag}" FontSize="{TemplateBinding FontSize}" Background="transparent" x:Name="placeholder" Foreground="{StaticResource TextForegroundDarkBrush}" Padding="{TemplateBinding Padding}" VerticalAlignment="Center" HorizontalAlignment="{TemplateBinding HorizontalAlignment}">
                             <TextBlock.Style>
                                 <Style TargetType="{x:Type TextBlock}">
                                     <Setter Property="Visibility" Value="Collapsed" />
@@ -73,11 +93,23 @@
                 <ControlTemplate TargetType="{x:Type PasswordBox}">
 
                     <Grid>
-                        <Border x:Name="border" Background="{TemplateBinding Background}" BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{TemplateBinding BorderBrush}" SnapsToDevicePixels="True">
+
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+
+                        
+
+                        <Border Grid.Row="1" x:Name="border" Background="{TemplateBinding Background}" BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{TemplateBinding BorderBrush}" SnapsToDevicePixels="True">
                             <ScrollViewer x:Name="PART_ContentHost" Focusable="false" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden"/>
                         </Border>
 
-                        <TextBlock Visibility="{TemplateBinding local:HasTextProperty.Value, Converter={local:BooleanToVisibilityValueConverter}}" IsHitTestVisible="False" Text="{TemplateBinding Tag}" FontSize="{TemplateBinding FontSize}" Background="transparent" x:Name="placeholder" Foreground="{StaticResource TextForegroundDarkBrush}" Padding="{TemplateBinding Padding}" VerticalAlignment="Center" HorizontalAlignment="{TemplateBinding HorizontalAlignment}">
+                        <TextBlock Grid.Row="0" Margin="10,0,10,-5" Visibility="{TemplateBinding local:HasTextProperty.Value, Converter={local:BooleanToVisibilityValueConverter}, ConverterParameter=true}" IsHitTestVisible="False" Text="{TemplateBinding Tag}" FontSize="12" Background="transparent" x:Name="placeholderSmall" Foreground="{StaticResource TextForegroundDarkBrush}" VerticalAlignment="Center" HorizontalAlignment="{TemplateBinding HorizontalAlignment}">
+
+                        </TextBlock>
+
+                        <TextBlock Grid.Row="1" Visibility="{TemplateBinding local:HasTextProperty.Value, Converter={local:BooleanToVisibilityValueConverter}}" IsHitTestVisible="False" Text="{TemplateBinding Tag}" FontSize="{TemplateBinding FontSize}" Background="transparent" x:Name="placeholder" Foreground="{StaticResource TextForegroundDarkBrush}" Padding="{TemplateBinding Padding}" VerticalAlignment="Center" HorizontalAlignment="{TemplateBinding HorizontalAlignment}">
                             
                         </TextBlock>
                     </Grid>
@@ -91,6 +123,9 @@
             </Setter.Value>
         </Setter>
     </Style>
+
+
+
 
     <Style TargetType="{x:Type fa:IconBlock}" x:Key="SpinningText">
 

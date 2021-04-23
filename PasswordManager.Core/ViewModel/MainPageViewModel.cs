@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Dna;
+using System;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using System.Windows;
@@ -65,12 +66,12 @@ namespace PasswordManager.Core {
 
             Accounts = new ObservableCollection<PasswordListItemViewModel>();
 
-            Accounts.Add(new PasswordListItemViewModel() { AccountName ="Bros", Email="bros@Bro.com"});
-            Accounts.Add(new PasswordListItemViewModel() { AccountName="JuttaEureLehrerin", Email="jutta.EureLehrerin@gmail.com"});
-            Accounts.Add(new PasswordListItemViewModel() { AccountName="foo3", Email="foo@bar3.de"});
-            Accounts.Add(new PasswordListItemViewModel() { AccountName = "foo4", Email = "foo@bar4.tk" });
-            Accounts.Add(new PasswordListItemViewModel() { AccountName = "foo5", Email = "foo@bar5.io" });
-            Accounts.Add(new PasswordListItemViewModel() { AccountName= "Daniel", Email = "Daniel@Stinkt.bah"});
+            Accounts.Add(new PasswordListItemViewModel() { AccountName ="Bros", Email="bros@Bro.com", Password="1"});
+            Accounts.Add(new PasswordListItemViewModel() { AccountName="JuttaEureLehrerin", Email="jutta.EureLehrerin@gmail.com", Password = "2" });
+            Accounts.Add(new PasswordListItemViewModel() { AccountName="foo3", Email="foo@bar3.de", Password = "3" });
+            Accounts.Add(new PasswordListItemViewModel() { AccountName = "foo4", Email = "foo@bar4.tk", Password = "4" });
+            Accounts.Add(new PasswordListItemViewModel() { AccountName = "foo5", Email = "foo@bar5.io", Password = "5" });
+            Accounts.Add(new PasswordListItemViewModel() { AccountName= "Daniel", Email = "Daniel@Stinkt.bah", Password = "6" });
         }
         #endregion
 
@@ -90,8 +91,29 @@ namespace PasswordManager.Core {
         /// </summary>
         /// <returns></returns>
         private async Task AddPassword() {
-            // TODO form to input the new data
+            DialogPasswordItemViewModel viewModel = new DialogPasswordItemViewModel { 
+                Notes = "TODO"
+            };
+            await IoC.UI.ShowModifyDialog(viewModel, "Add Password");
+
+            // return if the modification was canceled
+            if(!viewModel.Success) {
+                return;
+            }
+
+            // Call the server
+            var result = await WebRequests.PostAsync<ApiResponse<UserContentApiModel>>(
+               ApiRoutes.ServerAdress + ApiRoutes.AddUserContent,
+                new UserContentApiModel {
+                    Id = Guid.NewGuid().ToString("N"),
+                    // TODO encrypt info and send to server       
+                }) ;
             
+            // if the response has an error -> display it
+            if (await result.DisplayErrorIfFailedAsync("Failed to add Password")) {
+                // done
+                return;
+            }
 
         }
 
