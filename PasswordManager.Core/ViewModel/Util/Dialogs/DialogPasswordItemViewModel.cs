@@ -70,7 +70,11 @@ namespace PasswordManager.Core {
             window.Close();
         }
 
+        /// <summary>
+        /// Generates a new secure Password with the given settings and feeds it into the Password field
+        /// </summary>
         private void GeneratePassword() {
+            // Todo: get settings from the settings db
             var includeLowercase = true;
             var includeUppercase = true;
             var includeNum = true;

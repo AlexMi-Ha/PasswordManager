@@ -11,7 +11,7 @@ namespace PasswordManager.Core {
         /// <summary>
         /// The current Page of the Application
         /// </summary>
-        public ApplicationPage CurrentPage { get; private set; } = ApplicationPage.MainPage;
+        public ApplicationPage CurrentPage { get; private set; } = ApplicationPage.Login;
 
         /// <summary>
         /// Hash of the users master password. Used as a key for en/decryption
@@ -38,8 +38,8 @@ namespace PasswordManager.Core {
         /// Handles what happens on a successful login
         /// </summary>
         public void HandleSuccessfulLogin(LoginResultApiModel loginResult) {
-            GoToPage(ApplicationPage.MainPage);
             ClientToken = loginResult.Token;
+            GoToPage(ApplicationPage.MainPage);
         }
         #endregion
     }

@@ -14,6 +14,11 @@ namespace PasswordManager.Core {
         #region Public Properties
 
         /// <summary>
+        /// Email of the user trying to log in
+        /// </summary>
+        public string Email { get; set; }
+
+        /// <summary>
         /// Flag indicating if the logincommand is running
         /// </summary>
         public bool LoginIsRunning { get; set; }
@@ -46,9 +51,9 @@ namespace PasswordManager.Core {
                 // Call the server
                 // Todo add email to login
                 var result = await WebRequests.PostAsync<ApiResponse<LoginResultApiModel>>(
-                    ApiRoutes.ServerAdress + ApiRoutes.Login,
+                    "http://localhost:5000/api/login",
                     new LoginCredentialsApiModel { 
-                        Email = "foo@bar.de",
+                        Email = Email,
                         Password = parameter.SecurePassword.Unsecure(),
                 });
 

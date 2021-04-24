@@ -66,6 +66,7 @@ namespace PasswordManager.Core {
             AddPasswordCommand = new RelayCommand(async () => await AddPassword());
             AccountButtonCommand = new RelayCommand(() => { Console.WriteLine("TODO"); });
 
+            // Retrieve the users accounts
             Task.Run(async () => Accounts = await GetUserContent());
 
             /*
@@ -105,7 +106,7 @@ namespace PasswordManager.Core {
                 AccountName = Crypt.DecryptString(IoC.ApplicationViewModel.MasterHash, e.AccountNameHash),
                 Email = Crypt.DecryptString(IoC.ApplicationViewModel.MasterHash, e.EmailHash),
                 Password = Crypt.DecryptString(IoC.ApplicationViewModel.MasterHash, e.PasswordHash),
-                Username = Crypt.DecryptString(IoC.ApplicationViewModel.MasterHash, e.PasswordHash),
+                Username = Crypt.DecryptString(IoC.ApplicationViewModel.MasterHash, e.UsernameHash),
                 Website = Crypt.DecryptString(IoC.ApplicationViewModel.MasterHash, e.WebsiteHash),
                 Notes = Crypt.DecryptString(IoC.ApplicationViewModel.MasterHash, e.NotesHash)
             }));

@@ -19,6 +19,9 @@
                     <StackPanel>
                         <TextBlock Text="Login" FontSize="35" Margin="0 20"/>
                         
+                        <!-- Email box -->
+                        <TextBox Text="{Binding Email}" Style="{StaticResource TextBoxPreview}" Tag="Email" />
+
                         <!-- Master Password Box -->
                         <PasswordBox x:Name="PasswordText" Style="{DynamicResource PasswordBoxPreview}" Tag="Password" />
 

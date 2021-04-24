@@ -13,14 +13,11 @@
         /// </summary>
         public string ErrorMessage { get; set; }
 
-        /// <summary>
-        /// The Api response object
-        /// </summary>
-        public object Response { get; set; }
         #endregion
     }
 
+    
     public class ApiResponse<T> : ApiResponse {
-        public new T Response { get => (T)base.Response; set => base.Response = value; }
+        public T Response { get; set; }
     }
 }

@@ -68,9 +68,10 @@ namespace PasswordManager.Core {
         /// <param name="plainText">PlainText to hash</param>
         /// <returns></returns>
         public static string Hash(string plainText) {
-            var crypt = new SHA256Managed();
-            byte[] crypto = crypt.ComputeHash(Encoding.UTF8.GetBytes(plainText));
-            return Convert.ToBase64String(crypto);
+            using (var crypt = MD5.Create()) {
+                byte[] crypto = crypt.ComputeHash(Encoding.UTF8.GetBytes(plainText));
+                return Convert.ToBase64String(crypto);
+            }
         }
 
 

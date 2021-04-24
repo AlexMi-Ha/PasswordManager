@@ -50,7 +50,7 @@ namespace PasswordManager.Core {
                 AccountName = this.AccountName,
                 Email = this.Email,
                 Password = this.Password,
-                Username = this.Password,
+                Username = this.Username,
                 Website = this.Website,
                 Notes = this.Notes,
             };
