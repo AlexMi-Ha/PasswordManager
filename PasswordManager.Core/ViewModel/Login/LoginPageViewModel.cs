@@ -49,9 +49,8 @@ namespace PasswordManager.Core {
             await RunCommandAsync(() => this.LoginIsRunning, async () => {
 
                 // Call the server
-                // Todo add email to login
                 var result = await WebRequests.PostAsync<ApiResponse<LoginResultApiModel>>(
-                    "http://localhost:5000/api/login",
+                    ApiRoutes.ServerAdress + ApiRoutes.Login,
                     new LoginCredentialsApiModel { 
                         Email = Email,
                         Password = parameter.SecurePassword.Unsecure(),

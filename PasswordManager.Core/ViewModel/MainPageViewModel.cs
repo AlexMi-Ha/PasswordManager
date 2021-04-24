@@ -69,15 +69,6 @@ namespace PasswordManager.Core {
             // Retrieve the users accounts
             Task.Run(async () => Accounts = await GetUserContent());
 
-            /*
-            Accounts = new ObservableCollection<PasswordListItemViewModel>();
-
-            Accounts.Add(new PasswordListItemViewModel() { AccountName ="Bros", Email="bros@Bro.com", Password="1"});
-            Accounts.Add(new PasswordListItemViewModel() { AccountName="JuttaEureLehrerin", Email="jutta.EureLehrerin@gmail.com", Password = "2" });
-            Accounts.Add(new PasswordListItemViewModel() { AccountName="foo3", Email="foo@bar3.de", Password = "3" });
-            Accounts.Add(new PasswordListItemViewModel() { AccountName = "foo4", Email = "foo@bar4.tk", Password = "4" });
-            Accounts.Add(new PasswordListItemViewModel() { AccountName = "foo5", Email = "foo@bar5.io", Password = "5" });
-            Accounts.Add(new PasswordListItemViewModel() { AccountName= "Daniel", Email = "Daniel@Stinkt.bah", Password = "6" });*/
         }
         #endregion
 

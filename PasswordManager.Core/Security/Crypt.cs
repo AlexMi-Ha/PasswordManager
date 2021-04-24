@@ -16,6 +16,9 @@ namespace PasswordManager.Core {
         /// <param name="plainText">PlainText to encrypt</param>
         /// <returns></returns>
         public static string EncryptString(string key, string plainText) {
+            if (string.IsNullOrWhiteSpace(plainText))
+                return "";
+
             byte[] iv = new byte[16];
             byte[] encryptArray;
 
@@ -44,6 +47,9 @@ namespace PasswordManager.Core {
         /// <param name="cipherText">Ciphertext to decrypt</param>
         /// <returns></returns>
         public static string DecryptString(string key, string cipherText) {
+            if (string.IsNullOrWhiteSpace(cipherText))
+                return "";
+
             byte[] iv = new byte[16];
             byte[] buffer = Convert.FromBase64String(cipherText);
 
