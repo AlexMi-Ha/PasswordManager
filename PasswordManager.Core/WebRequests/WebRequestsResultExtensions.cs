@@ -7,7 +7,6 @@ namespace PasswordManager.Core {
         /// <summary>
         /// Checks the web requests response for error and displays them
         /// </summary>
-        /// <typeparam name="T">Type of the ApiResponse</typeparam>
         /// <param name="response">Response to check</param>
         /// <param name="title">Title of the error dialog if there was any</param>
         /// <returns>bool indicating if there was an error</returns>

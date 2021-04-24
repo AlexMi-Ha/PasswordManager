@@ -66,8 +66,15 @@ namespace PasswordManager.Core {
                ApiRoutes.ServerAdress + ApiRoutes.UpdateUserContent,
                 new UserContentApiModel {
                     Id = viewModel.Id,
-                    // TODO encrypt info and send to server       
-                });
+                    AccountNameHash = Crypt.EncryptString(IoC.ApplicationViewModel.MasterHash, viewModel.AccountName),
+                    EmailHash = Crypt.EncryptString(IoC.ApplicationViewModel.MasterHash, viewModel.Email),
+                    PasswordHash = Crypt.EncryptString(IoC.ApplicationViewModel.MasterHash, viewModel.Password),
+                    UsernameHash = Crypt.EncryptString(IoC.ApplicationViewModel.MasterHash, viewModel.Username),
+                    WebsiteHash = Crypt.EncryptString(IoC.ApplicationViewModel.MasterHash, viewModel.Website),
+                    NotesHash = Crypt.EncryptString(IoC.ApplicationViewModel.MasterHash, viewModel.Notes),
+                },
+                bearerToken: IoC.ApplicationViewModel.ClientToken
+                );
 
             // if the response has an error -> display it
             if (await result.DisplayErrorIfFailedAsync("Failed to edit the Account")) {

@@ -57,11 +57,12 @@ namespace PasswordManager.Core {
                     // done
                     return;
                 }
-
                 // if we got here -> successfully logged in
 
+                IoC.ApplicationViewModel.MasterHash = Crypt.Hash(parameter.SecurePassword.Unsecure());
+
                 // let the application view model what happens on the successful login
-                IoC.Get<ApplicationViewModel>().HandleSuccessfulLogin(result.ServerResponse.Response);
+                IoC.ApplicationViewModel.HandleSuccessfulLogin(result.ServerResponse.Response);
             });
 
         }

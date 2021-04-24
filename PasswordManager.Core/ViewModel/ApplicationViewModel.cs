@@ -1,4 +1,6 @@
-﻿namespace PasswordManager.Core {
+﻿using System.Security;
+
+namespace PasswordManager.Core {
     /// <summary>
     /// ApplicationState as a ViewModel
     /// </summary>
@@ -10,6 +12,13 @@
         /// The current Page of the Application
         /// </summary>
         public ApplicationPage CurrentPage { get; private set; } = ApplicationPage.MainPage;
+
+        /// <summary>
+        /// Hash of the users master password. Used as a key for en/decryption
+        /// </summary>
+        public string MasterHash { get; set; }
+
+        public string ClientToken { get; private set; }
 
         #endregion
 
@@ -30,6 +39,7 @@
         /// </summary>
         public void HandleSuccessfulLogin(LoginResultApiModel loginResult) {
             GoToPage(ApplicationPage.MainPage);
+            ClientToken = loginResult.Token;
         }
         #endregion
     }

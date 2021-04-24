@@ -1,6 +1,8 @@
 ﻿using Dna;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
@@ -64,6 +66,9 @@ namespace PasswordManager.Core {
             AddPasswordCommand = new RelayCommand(async () => await AddPassword());
             AccountButtonCommand = new RelayCommand(() => { Console.WriteLine("TODO"); });
 
+            Task.Run(async () => Accounts = await GetUserContent());
+
+            /*
             Accounts = new ObservableCollection<PasswordListItemViewModel>();
 
             Accounts.Add(new PasswordListItemViewModel() { AccountName ="Bros", Email="bros@Bro.com", Password="1"});
@@ -71,11 +76,40 @@ namespace PasswordManager.Core {
             Accounts.Add(new PasswordListItemViewModel() { AccountName="foo3", Email="foo@bar3.de", Password = "3" });
             Accounts.Add(new PasswordListItemViewModel() { AccountName = "foo4", Email = "foo@bar4.tk", Password = "4" });
             Accounts.Add(new PasswordListItemViewModel() { AccountName = "foo5", Email = "foo@bar5.io", Password = "5" });
-            Accounts.Add(new PasswordListItemViewModel() { AccountName= "Daniel", Email = "Daniel@Stinkt.bah", Password = "6" });
+            Accounts.Add(new PasswordListItemViewModel() { AccountName= "Daniel", Email = "Daniel@Stinkt.bah", Password = "6" });*/
         }
         #endregion
 
         #region Methods
+
+        /// <summary>
+        /// Retrieve all user account from the server
+        /// </summary>
+        /// <returns></returns>
+        private async Task<ObservableCollection<PasswordListItemViewModel>> GetUserContent() {
+            // get the info from the server
+            var result = await WebRequests.PostAsync<ApiResponse<GetUserContentApiModel>>(
+                    ApiRoutes.ServerAdress + ApiRoutes.GetUserContent,
+                    bearerToken: IoC.ApplicationViewModel.ClientToken
+                );
+
+            // was there an error? if yes display it
+            if (await result.DisplayErrorIfFailedAsync("Failed to load User Content")) {
+                return new ObservableCollection<PasswordListItemViewModel>();
+            }
+
+            // return the retrieved data
+            return new ObservableCollection<PasswordListItemViewModel>( 
+                result.ServerResponse.Response.UserContent.Select(e => new PasswordListItemViewModel {
+                Id = e.Id,
+                AccountName = Crypt.DecryptString(IoC.ApplicationViewModel.MasterHash, e.AccountNameHash),
+                Email = Crypt.DecryptString(IoC.ApplicationViewModel.MasterHash, e.EmailHash),
+                Password = Crypt.DecryptString(IoC.ApplicationViewModel.MasterHash, e.PasswordHash),
+                Username = Crypt.DecryptString(IoC.ApplicationViewModel.MasterHash, e.PasswordHash),
+                Website = Crypt.DecryptString(IoC.ApplicationViewModel.MasterHash, e.WebsiteHash),
+                Notes = Crypt.DecryptString(IoC.ApplicationViewModel.MasterHash, e.NotesHash)
+            }));
+        }
 
         /// <summary>
         /// Method to Filter or search for specific passwords
@@ -91,9 +125,7 @@ namespace PasswordManager.Core {
         /// </summary>
         /// <returns></returns>
         private async Task AddPassword() {
-            DialogPasswordItemViewModel viewModel = new DialogPasswordItemViewModel { 
-                Notes = "TODO"
-            };
+            DialogPasswordItemViewModel viewModel = new DialogPasswordItemViewModel();
             await IoC.UI.ShowModifyDialog(viewModel, "Add Password");
 
             // return if the modification was canceled
@@ -106,8 +138,15 @@ namespace PasswordManager.Core {
                ApiRoutes.ServerAdress + ApiRoutes.AddUserContent,
                 new UserContentApiModel {
                     Id = Guid.NewGuid().ToString("N"),
-                    // TODO encrypt info and send to server       
-                }) ;
+                    AccountNameHash = Crypt.EncryptString(IoC.ApplicationViewModel.MasterHash, viewModel.AccountName),
+                    EmailHash = Crypt.EncryptString(IoC.ApplicationViewModel.MasterHash, viewModel.Email),
+                    PasswordHash = Crypt.EncryptString(IoC.ApplicationViewModel.MasterHash, viewModel.Password),
+                    UsernameHash = Crypt.EncryptString(IoC.ApplicationViewModel.MasterHash, viewModel.Username),
+                    WebsiteHash = Crypt.EncryptString(IoC.ApplicationViewModel.MasterHash, viewModel.Website),
+                    NotesHash = Crypt.EncryptString(IoC.ApplicationViewModel.MasterHash, viewModel.Notes),
+                },
+                bearerToken: IoC.ApplicationViewModel.ClientToken
+                );
             
             // if the response has an error -> display it
             if (await result.DisplayErrorIfFailedAsync("Failed to add Password")) {
@@ -115,6 +154,16 @@ namespace PasswordManager.Core {
                 return;
             }
 
+            // add the new Account to the view
+            Accounts.Add(new PasswordListItemViewModel {
+                Id = result.ServerResponse.Response.Id,
+                AccountName = viewModel.AccountName,
+                Email = viewModel.Email,
+                Password = viewModel.Password,
+                Username = viewModel.Username,
+                Website = viewModel.Website,
+                Notes = viewModel.Notes,
+            }) ;
         }
 
 

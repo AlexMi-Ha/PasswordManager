@@ -71,8 +71,14 @@ namespace PasswordManager.Core {
         }
 
         private void GeneratePassword() {
-            // TODO
-            Password = "TODO";
+            var includeLowercase = true;
+            var includeUppercase = true;
+            var includeNum = true;
+            var includeSpecial = true;
+            var disableTwoIdenticalsInARow = true;
+            var minLengthPassword = 15;
+            var maxLengthPassword = 20;
+            Password = Crypt.GeneratePassword(includeLowercase, includeUppercase, includeNum, includeSpecial, disableTwoIdenticalsInARow, minLengthPassword, maxLengthPassword);
         }
 
         #endregion
