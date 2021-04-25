@@ -18,5 +18,12 @@ namespace PasswordManager.Core {
         /// <param name="title">title of the message box dialog</param>
         /// <returns></returns>
         Task ShowMessageBoxDialog(DialogMessageBoxViewModel viewModel, string title);
+
+        /// <summary>
+        /// Display a Search dialog box
+        /// </summary>
+        /// <param name="viewModel">ViewModel to display</param>
+        /// <returns></returns>
+        Task SearchDialog(DialogSearchBoxViewModel viewModel, string title);
     }
 }

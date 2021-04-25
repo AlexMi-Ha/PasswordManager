@@ -9,7 +9,7 @@ namespace PasswordManager {
     public partial class LoginPage : BasePage<LoginPageViewModel>, IHavePassword {
         public LoginPage() {
             InitializeComponent();
-            PasswordText.Focus();
+            EmailText.Focus();
         }
 
         public SecureString SecurePassword => PasswordText.SecurePassword;

@@ -40,7 +40,14 @@
             <!-- Top Button Panel -->
             <Border Padding="5" Grid.Row="0" Width="{Binding ButtonPanelWidth}">
                 <StackPanel Orientation="Vertical" >
-                    
+
+                    <!-- Refresh Button -->
+                    <Button Command="{Binding RefreshCommand}" local:IsBusyProperty.Value="{Binding RefreshIsRunning}" Style="{StaticResource MenuPanelButtonWithBusy}" Tag="Refresh" >
+                        <Button.Content>
+                            <fa:IconBlock Icon="Retweet" Foreground="{StaticResource TextForegroundLightBrush}"/>
+                        </Button.Content>
+                    </Button>
+
                     <!-- Search Password Button -->
                     <Button Command="{Binding SearchPasswordCommand}" Style="{StaticResource MenuPanelButton}" Tag="Search Password" >
                         <Button.Content>

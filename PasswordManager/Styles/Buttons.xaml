@@ -69,7 +69,7 @@
         <Setter Property="Background" Value="{StaticResource ButtonBackgroundBrush}" />
         <Setter Property="Foreground" Value="{StaticResource TextForegroundLightBrush}" />
         <Setter Property="Margin" Value="0 20" />
-        <Setter Property="FontSize" Value="30" />
+        <Setter Property="FontSize" Value="20" />
         <Setter Property="BorderThickness" Value="0" />
         <Setter Property="Padding" Value="50 10 50 5" />
         <Setter Property="VerticalContentAlignment" Value="Center" />
@@ -81,7 +81,7 @@
                 <ControlTemplate TargetType="{x:Type ButtonBase}">
                     <Border x:Name="border" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" SnapsToDevicePixels="True">
                         <Grid>
-                            <TextBlock Visibility="{TemplateBinding local:IsBusyProperty.Value, Converter={local:BooleanToVisibilityValueConverter}}" Text="{TemplateBinding Content}" Focusable="False" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                            <TextBlock FontSize="{TemplateBinding FontSize}" Visibility="{TemplateBinding local:IsBusyProperty.Value, Converter={local:BooleanToVisibilityValueConverter}}" Text="{TemplateBinding Content}" Focusable="False" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
 
                             <fa:IconBlock Style="{StaticResource SpinningText}" Icon="spinner" Visibility="{TemplateBinding local:IsBusyProperty.Value, Converter={local:BooleanToVisibilityValueConverter}, ConverterParameter=True}" Focusable="False" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
                         </Grid>
@@ -117,8 +117,44 @@
 
                             <ContentPresenter Content="{TemplateBinding Content}" Width="40" Height="40" Grid.Column="0" VerticalAlignment="Center" />
                             
-                            <TextBlock Text="{TemplateBinding Tag}" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,5,0,0"/>
+                            <TextBlock Text="{TemplateBinding Tag}" FontSize="{TemplateBinding FontSize}" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,5,0,0"/>
                             
+                        </Grid>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="{StaticResource ForegroundSelectionLightBrush}"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <!-- Menu Panel Button with busy animation -->
+    <Style TargetType="{x:Type Button}" x:Key="MenuPanelButtonWithBusy" BasedOn="{StaticResource BaseStyle}">
+        <Setter Property="Background" Value="{StaticResource ButtonBackgroundBrush}" />
+        <Setter Property="Padding" Value="5" />
+        <Setter Property="FontSize" Value="20" />
+        <Setter Property="Margin" Value="0,0,0,5" />
+        <Setter Property="local:IsBusyProperty.Value" Value="False" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Border Padding="{TemplateBinding Button.Padding}" Background="{TemplateBinding Button.Background}">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+
+                            <Grid Grid.Column="0">
+                                <ContentPresenter Visibility="{TemplateBinding local:IsBusyProperty.Value, Converter={local:BooleanToVisibilityValueConverter}}" Content="{TemplateBinding Content}" Width="40" Height="40" VerticalAlignment="Center" />
+                                <fa:IconBlock Foreground="{StaticResource TextForegroundLightBrush}" Style="{StaticResource SpinningText}" Icon="spinner" Width="40" Height="40" Visibility="{TemplateBinding local:IsBusyProperty.Value, Converter={local:BooleanToVisibilityValueConverter}, ConverterParameter=True}" Focusable="False" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="Center" />
+                            </Grid>
+                            <TextBlock Text="{TemplateBinding Tag}" FontSize="{TemplateBinding FontSize}" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,5,0,0"/>
+
                         </Grid>
                     </Border>
                 </ControlTemplate>
@@ -144,7 +180,7 @@
                 <ControlTemplate TargetType="{x:Type Button}">
                     <Border Padding="{TemplateBinding Button.Padding}" Background="{TemplateBinding Button.Background}">
                         <Grid>
-                            <TextBlock Text="{TemplateBinding Tag}" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,5,0,0"/>
+                            <TextBlock Text="{TemplateBinding Tag}" FontSize="{TemplateBinding FontSize}" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,5,0,0"/>
 
                         </Grid>
                     </Border>

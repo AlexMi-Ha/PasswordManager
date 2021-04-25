@@ -16,7 +16,7 @@
             <TextBlock Grid.Row="0" Text="{Binding Message}" Background="{StaticResource BackgroundLightBrush}"/>
 
             <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Bottom">
-                <Button Command="{Binding OkCommand}" CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:BaseDialogUserControl}}}"  Style="{StaticResource MenuPanelButtonNoIcon}" Tag="Ok" Width="100" Margin="5 20 5 5"/>
+                <Button IsDefault="True" Command="{Binding OkCommand}" CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:BaseDialogUserControl}}}"  Style="{StaticResource MenuPanelButtonNoIcon}" Tag="Ok" Width="100" Margin="5 20 5 5"/>
             </StackPanel>
         </Grid>
     </Border>

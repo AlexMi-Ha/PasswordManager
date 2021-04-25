@@ -19,8 +19,25 @@ namespace PasswordManager {
             return b.ShowDialog(viewModel);
         }
 
+        /// <summary>
+        /// Display a Message in a dialog box
+        /// </summary>
+        /// <param name="viewModel">Viewmodel to display</param>
+        /// <returns></returns>
         public Task ShowMessageBoxDialog(DialogMessageBoxViewModel viewModel, string title) {
             MessageDialogBox b = new MessageDialogBox {
+                Title = title
+            };
+            return b.ShowDialog(viewModel);
+        }
+
+        /// <summary>
+        /// Display a Search dialog box
+        /// </summary>
+        /// <param name="viewModel">ViewModel to display</param>
+        /// <returns></returns>
+        public Task SearchDialog(DialogSearchBoxViewModel viewModel, string title) {
+            SearchDialogBox b = new SearchDialogBox {
                 Title = title
             };
             return b.ShowDialog(viewModel);

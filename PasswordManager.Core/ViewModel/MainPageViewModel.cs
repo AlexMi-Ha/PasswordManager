@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Input;
 
 namespace PasswordManager.Core {
@@ -37,7 +36,17 @@ namespace PasswordManager.Core {
 
         public ObservableCollection<PasswordListItemViewModel> Accounts { get; set; }
 
+        /// <summary>
+        /// Indicats if the refresh command is currently running
+        /// </summary>
+        public bool RefreshIsRunning { get; set; }
+
         #region Commands
+
+        /// <summary>
+        /// Command when the refresh button is pressed
+        /// </summary>
+        public ICommand RefreshCommand { get; set; }
 
         /// <summary>
         /// Command when the 'Search Password' button is pressed
@@ -62,13 +71,18 @@ namespace PasswordManager.Core {
         public MainPageViewModel() {
 
             // Initialize the Commands
+            RefreshCommand = new RelayCommand(async () => await RunCommandAsync(
+                    () => this.RefreshIsRunning, 
+                    async () => Accounts = new ObservableCollection<PasswordListItemViewModel>(await GetUserContent())
+                )
+            );
+
             SearchPasswordCommand = new RelayCommand(async () => await SearchPassword());
             AddPasswordCommand = new RelayCommand(async () => await AddPassword());
             AccountButtonCommand = new RelayCommand(() => { Console.WriteLine("TODO"); });
 
             // Retrieve the users accounts
-            Task.Run(async () => Accounts = await GetUserContent());
-
+            Task.Run(async () => Accounts = new ObservableCollection<PasswordListItemViewModel>( await GetUserContent()));
         }
         #endregion
 
@@ -78,7 +92,7 @@ namespace PasswordManager.Core {
         /// Retrieve all user account from the server
         /// </summary>
         /// <returns></returns>
-        private async Task<ObservableCollection<PasswordListItemViewModel>> GetUserContent() {
+        private async Task<List<PasswordListItemViewModel>> GetUserContent() {
             // get the info from the server
             var result = await WebRequests.PostAsync<ApiResponse<GetUserContentApiModel>>(
                     ApiRoutes.ServerAdress + ApiRoutes.GetUserContent,
@@ -87,12 +101,11 @@ namespace PasswordManager.Core {
 
             // was there an error? if yes display it
             if (await result.DisplayErrorIfFailedAsync("Failed to load User Content")) {
-                return new ObservableCollection<PasswordListItemViewModel>();
+                return new List<PasswordListItemViewModel>();
             }
 
             // return the retrieved data
-            return new ObservableCollection<PasswordListItemViewModel>( 
-                result.ServerResponse.Response.UserContent.Select(e => new PasswordListItemViewModel {
+            return result.ServerResponse.Response.UserContent.Select(e => new PasswordListItemViewModel {
                 Id = e.Id,
                 AccountName = Crypt.DecryptString(IoC.ApplicationViewModel.MasterHash, e.AccountNameHash),
                 Email = Crypt.DecryptString(IoC.ApplicationViewModel.MasterHash, e.EmailHash),
@@ -100,7 +113,7 @@ namespace PasswordManager.Core {
                 Username = Crypt.DecryptString(IoC.ApplicationViewModel.MasterHash, e.UsernameHash),
                 Website = Crypt.DecryptString(IoC.ApplicationViewModel.MasterHash, e.WebsiteHash),
                 Notes = Crypt.DecryptString(IoC.ApplicationViewModel.MasterHash, e.NotesHash)
-            }));
+            }).ToList();
         }
 
         /// <summary>
@@ -108,8 +121,46 @@ namespace PasswordManager.Core {
         /// </summary>
         /// <returns></returns>
         private async Task SearchPassword() {
-            await Task.Delay(1);
-            Console.WriteLine("TODO");
+            // create the dialog
+            DialogSearchBoxViewModel viewModel = new DialogSearchBoxViewModel();
+            await IoC.UI.SearchDialog(viewModel, "Search Password");
+
+            // return if the dialog was unsuccessful
+            if(!viewModel.Successful) {
+                return;
+            }
+
+            // unchecked the user all the search boxes?
+            if(!viewModel.AccountNameSearch && !viewModel.EmailSearch && !viewModel.UsernameSearch && !viewModel.WebsiteSearch) {
+                // there can be no results, so clear the accounts and return
+                Accounts.Clear();
+                return;
+            }
+            // get usercontent from the server
+            var userContent = await GetUserContent();
+
+            // if searching for nothing -> just display all entries
+            if(string.IsNullOrWhiteSpace(viewModel.SearchForText)) {
+                Accounts = new ObservableCollection<PasswordListItemViewModel>(userContent);
+                return;
+            }
+
+            var searchContent = new List<PasswordListItemViewModel>();
+            // Search all valid entries
+            if(viewModel.ContainsOption) {
+                if (viewModel.AccountNameSearch) searchContent.AddRange(userContent.Where(e => e.AccountName.ToUpper().Contains(viewModel.SearchForText.ToUpper())).Where(e => !searchContent.Contains(e)));
+                if (viewModel.EmailSearch) searchContent.AddRange(userContent.Where(e => e.Email.ToUpper().Contains(viewModel.SearchForText.ToUpper())).Where(e => !searchContent.Contains(e)));
+                if (viewModel.UsernameSearch) searchContent.AddRange(userContent.Where(e => e.Username.ToUpper().Contains(viewModel.SearchForText.ToUpper())).Where(e => !searchContent.Contains(e)));
+                if (viewModel.WebsiteSearch) searchContent.AddRange(userContent.Where(e => e.Website.ToUpper().Contains(viewModel.SearchForText.ToUpper())).Where(e => !searchContent.Contains(e)));
+            } else {
+                if (viewModel.AccountNameSearch) searchContent.AddRange(userContent.Where(e => e.AccountName.ToUpper().Equals(viewModel.SearchForText.ToUpper())).Where(e => !searchContent.Contains(e)));
+                if (viewModel.EmailSearch) searchContent.AddRange(userContent.Where(e => e.Email.ToUpper().Equals(viewModel.SearchForText.ToUpper())).Where(e => !searchContent.Contains(e)));
+                if (viewModel.UsernameSearch) searchContent.AddRange(userContent.Where(e => e.Username.ToUpper().Equals(viewModel.SearchForText.ToUpper())).Where(e => !searchContent.Contains(e)));
+                if (viewModel.WebsiteSearch) searchContent.AddRange(userContent.Where(e => e.Website.ToUpper().Equals(viewModel.SearchForText.ToUpper())).Where(e => !searchContent.Contains(e)));
+            }
+
+            // update the accounts list
+            Accounts = new ObservableCollection<PasswordListItemViewModel>(searchContent);
         }
 
         /// <summary>
