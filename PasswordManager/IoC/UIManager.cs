@@ -13,8 +13,16 @@ namespace PasswordManager {
         /// <param name="viewModel">The View Model to display</param>
         /// <returns></returns>
         public Task ShowModifyDialog(DialogPasswordItemViewModel viewModel, string title) {
-            PasswordItemDialogBox b = new PasswordItemDialogBox();
-            b.Title = title;
+            PasswordItemDialogBox b = new PasswordItemDialogBox {
+                Title = title
+            };
+            return b.ShowDialog(viewModel);
+        }
+
+        public Task ShowMessageBoxDialog(DialogMessageBoxViewModel viewModel, string title) {
+            MessageDialogBox b = new MessageDialogBox {
+                Title = title
+            };
             return b.ShowDialog(viewModel);
         }
     }

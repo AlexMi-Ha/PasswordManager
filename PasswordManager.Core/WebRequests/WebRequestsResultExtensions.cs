@@ -32,7 +32,7 @@ namespace PasswordManager.Core {
                 }
 
                 // Display error
-                // Todo error message box
+                await IoC.UI.ShowMessageBoxDialog(new DialogMessageBoxViewModel { Message = message }, title);
 
                 // return that we hat an error
                 return true;
