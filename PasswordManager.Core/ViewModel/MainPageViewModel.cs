@@ -61,7 +61,7 @@ namespace PasswordManager.Core {
         /// <summary>
         /// Command when the 'Account' button is pressed
         /// </summary>
-        public ICommand AccountButtonCommand { get; set; }
+        public ICommand LogoutButtonCommand { get; set; }
         #endregion
 
         #region Constructor
@@ -79,7 +79,7 @@ namespace PasswordManager.Core {
 
             SearchPasswordCommand = new RelayCommand(async () => await SearchPassword());
             AddPasswordCommand = new RelayCommand(async () => await AddPassword());
-            AccountButtonCommand = new RelayCommand(() => { Console.WriteLine("TODO"); });
+            LogoutButtonCommand = new RelayCommand(Logout);
 
             // Retrieve the users accounts
             Task.Run(async () => Accounts = new ObservableCollection<PasswordListItemViewModel>( await GetUserContent()));
@@ -87,6 +87,11 @@ namespace PasswordManager.Core {
         #endregion
 
         #region Methods
+
+
+        private void Logout() {
+            IoC.ApplicationViewModel.HandleLogout();
+        }
 
         /// <summary>
         /// Retrieve all user account from the server

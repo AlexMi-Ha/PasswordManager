@@ -69,8 +69,8 @@
             <Border Padding="5" Grid.Row="1" Width="{Binding ButtonPanelWidth}">
                 <StackPanel Orientation="Vertical" VerticalAlignment="Bottom">
                     
-                    <!-- Account Button -->
-                    <Button Command="{Binding AccountButtonCommand}" Margin="0,5,0,0" Style="{StaticResource MenuPanelButton}" Tag="Account" >
+                    <!-- Logout Button -->
+                    <Button Command="{Binding LogoutButtonCommand}" Margin="0,5,0,0" Style="{StaticResource MenuPanelButton}" Tag="Logout" >
                         <Button.Content>
                             <fa:IconBlock Icon="User" Foreground="{StaticResource TextForegroundLightBrush}"/>
                         </Button.Content>

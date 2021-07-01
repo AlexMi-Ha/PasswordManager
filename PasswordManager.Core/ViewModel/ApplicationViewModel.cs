@@ -41,6 +41,12 @@ namespace PasswordManager.Core {
             ClientToken = loginResult.Token;
             GoToPage(ApplicationPage.MainPage);
         }
+
+        public void HandleLogout() {
+            ClientToken = string.Empty;
+            MasterHash = string.Empty;
+            GoToPage(ApplicationPage.Login);
+        }
         #endregion
     }
 }
