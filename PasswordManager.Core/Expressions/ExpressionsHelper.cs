@@ -29,11 +29,11 @@ namespace PasswordManager.Core {
             // converts a lambda () => some.Property; to some.Property
             var expression = (lambda as LambdaExpression).Body as MemberExpression;
 
-            // get the property information
+            
             var propertyInfo = (PropertyInfo)expression.Member;
             var target = Expression.Lambda(expression.Expression).Compile().DynamicInvoke();
 
-            // set the property
+            
             propertyInfo.SetValue(target, value);
         }
     }
