@@ -1,4 +1,5 @@
-﻿using Ninject;
+﻿using Dna;
+using Ninject;
 
 namespace PasswordManager.Core {
 
@@ -16,6 +17,11 @@ namespace PasswordManager.Core {
         /// Getter for the Application viewmodel
         /// </summary>
         public static ApplicationViewModel ApplicationViewModel => IoC.Get<ApplicationViewModel>();
+
+        /// <summary>
+        /// Getter for the Data store
+        /// </summary>
+        public static IClientDataStore ClientDataStore => Framework.Service<IClientDataStore>();
 
         /// <summary>
         /// Getter for the IUIManager

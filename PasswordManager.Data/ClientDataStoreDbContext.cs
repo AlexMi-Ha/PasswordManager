@@ -27,6 +27,7 @@ namespace PasswordManager.Data {
         #region Model Creating
 
         protected override void OnModelCreating(ModelBuilder modelBuilder) {
+            
             base.OnModelCreating(modelBuilder);
 
             // Fluent API
@@ -34,13 +35,13 @@ namespace PasswordManager.Data {
             // Configure LoginCredentials
             // -------------------------
             modelBuilder.Entity<LoginDatabaseModel>().HasKey(a => a.UserId);
-            modelBuilder.Entity<LoginDatabaseModel>().Property(a => a.Guid).IsRequired(true);
+            //modelBuilder.Entity<LoginDatabaseModel>().Property(a => a.Guid).IsRequired(true);
             modelBuilder.Entity<LoginDatabaseModel>().Property(a => a.Email).HasMaxLength(256).IsRequired(true);
             modelBuilder.Entity<LoginDatabaseModel>().Property(a => a.Password).HasMaxLength(256).IsRequired(true);
 
             // Configure UserContent
             //-------------------------
-            modelBuilder.Entity<UserContentDatabaseModel>().HasKey(a => new { a.User, a.Id });
+            modelBuilder.Entity<UserContentDatabaseModel>().HasKey(a => new { a.UserId, a.Id });
             modelBuilder.Entity<UserContentDatabaseModel>().Property(a => a.AccountNameHash).HasMaxLength(256).IsRequired(true);
             modelBuilder.Entity<UserContentDatabaseModel>().Property(a => a.EmailHash).HasMaxLength(256).IsRequired(true);
             modelBuilder.Entity<UserContentDatabaseModel>().Property(a => a.UsernameHash).HasMaxLength(256);
@@ -48,7 +49,9 @@ namespace PasswordManager.Data {
             modelBuilder.Entity<UserContentDatabaseModel>().Property(a => a.PasswordHash).HasMaxLength(256).IsRequired(true);
             modelBuilder.Entity<UserContentDatabaseModel>().Property(a => a.NotesHash).HasMaxLength(2048);
 
+
         }
+
 
         #endregion
 

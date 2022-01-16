@@ -98,19 +98,19 @@ namespace PasswordManager.Core {
         /// </summary>
         /// <returns></returns>
         private async Task<List<PasswordListItemViewModel>> GetUserContent() {
-            // get the info from the server
-            var result = await WebRequests.PostAsync<ApiResponse<GetUserContentApiModel>>(
-                    ApiRoutes.ServerAdress + ApiRoutes.GetUserContent,
-                    bearerToken: IoC.ApplicationViewModel.ClientToken
+            // get the info from the database
+            var result = await IoC.ClientDataStore.GetUserContentAsync(
+                IoC.ApplicationViewModel.RunningLoginInfo
                 );
 
             // was there an error? if yes display it
-            if (await result.DisplayErrorIfFailedAsync("Failed to load User Content")) {
+            if (result == null) {
+                await IoC.UI.ShowMessageBoxDialog(new DialogMessageBoxViewModel { Message = "Failed to load User Content" }, "Error");
                 return new List<PasswordListItemViewModel>();
             }
 
             // return the retrieved data
-            return result.ServerResponse.Response.UserContent.Select(e => new PasswordListItemViewModel {
+            return result.UserContent.Select(e => new PasswordListItemViewModel {
                 Id = e.Id,
                 AccountName = Crypt.DecryptString(IoC.ApplicationViewModel.MasterHash, e.AccountNameHash),
                 Email = Crypt.DecryptString(IoC.ApplicationViewModel.MasterHash, e.EmailHash),
@@ -181,10 +181,10 @@ namespace PasswordManager.Core {
                 return;
             }
 
-            // Call the server
-            var result = await WebRequests.PostAsync<ApiResponse<UserContentApiModel>>(
-               ApiRoutes.ServerAdress + ApiRoutes.AddUserContent,
-                new UserContentApiModel {
+            // Call the database
+            var result = await IoC.ClientDataStore.AddUserContentAsync(
+                IoC.ApplicationViewModel.RunningLoginInfo,
+                new UserContentDataModel {
                     Id = Guid.NewGuid().ToString("N"),
                     AccountNameHash = Crypt.EncryptString(IoC.ApplicationViewModel.MasterHash, viewModel.AccountName),
                     EmailHash = Crypt.EncryptString(IoC.ApplicationViewModel.MasterHash, viewModel.Email),
@@ -192,26 +192,26 @@ namespace PasswordManager.Core {
                     UsernameHash = Crypt.EncryptString(IoC.ApplicationViewModel.MasterHash, viewModel.Username),
                     WebsiteHash = Crypt.EncryptString(IoC.ApplicationViewModel.MasterHash, viewModel.Website),
                     NotesHash = Crypt.EncryptString(IoC.ApplicationViewModel.MasterHash, viewModel.Notes),
-                },
-                bearerToken: IoC.ApplicationViewModel.ClientToken
+                }
                 );
             
             // if the response has an error -> display it
-            if (await result.DisplayErrorIfFailedAsync("Failed to add Password")) {
+            if (result == null) {
+                await IoC.UI.ShowMessageBoxDialog(new DialogMessageBoxViewModel { Message = "Failed to add Password" }, "Error");
                 // done
                 return;
             }
 
             // add the new Account to the view
             Accounts.Add(new PasswordListItemViewModel {
-                Id = result.ServerResponse.Response.Id,
+                Id = result.Id,
                 AccountName = viewModel.AccountName,
                 Email = viewModel.Email,
                 Password = viewModel.Password,
                 Username = viewModel.Username,
                 Website = viewModel.Website,
                 Notes = viewModel.Notes,
-            }) ;
+            });
         }
 
 

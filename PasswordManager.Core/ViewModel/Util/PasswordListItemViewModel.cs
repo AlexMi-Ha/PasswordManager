@@ -61,10 +61,10 @@ namespace PasswordManager.Core {
                 return;
             }
 
-            // Call the server
-            var result = await WebRequests.PostAsync<ApiResponse<UserContentApiModel>>(
-               ApiRoutes.ServerAdress + ApiRoutes.UpdateUserContent,
-                new UserContentApiModel {
+            // Call the database
+            var result = await IoC.ClientDataStore.UpdateUserContentAsync(
+                IoC.ApplicationViewModel.RunningLoginInfo,
+                new UserContentDataModel {
                     Id = viewModel.Id,
                     AccountNameHash = Crypt.EncryptString(IoC.ApplicationViewModel.MasterHash, viewModel.AccountName),
                     EmailHash = Crypt.EncryptString(IoC.ApplicationViewModel.MasterHash, viewModel.Email),
@@ -72,12 +72,12 @@ namespace PasswordManager.Core {
                     UsernameHash = Crypt.EncryptString(IoC.ApplicationViewModel.MasterHash, viewModel.Username),
                     WebsiteHash = Crypt.EncryptString(IoC.ApplicationViewModel.MasterHash, viewModel.Website),
                     NotesHash = Crypt.EncryptString(IoC.ApplicationViewModel.MasterHash, viewModel.Notes),
-                },
-                bearerToken: IoC.ApplicationViewModel.ClientToken
+                }
                 );
 
             // if the response has an error -> display it
-            if (await result.DisplayErrorIfFailedAsync("Failed to edit the Account")) {
+            if (result == null) {
+                await IoC.UI.ShowMessageBoxDialog(new DialogMessageBoxViewModel { Message = "Failed to edit the Account" }, "Error");
                 // done
                 return;
             }

@@ -35,6 +35,7 @@ namespace PasswordManager.Core {
         #region Contructor
         public LoginPageViewModel() {
             LoginCommand = new RelayParameterizedCommand<IHavePassword>(async (parameter) => await LoginAsync(parameter));
+
         }
         #endregion
 
@@ -48,17 +49,17 @@ namespace PasswordManager.Core {
 
             await RunCommandAsync(() => this.LoginIsRunning, async () => {
 
-                // Call the server
-                var result = await WebRequests.PostAsync<ApiResponse<LoginResultApiModel>>(
-                    ApiRoutes.ServerAdress + ApiRoutes.Login,
-                    new LoginCredentialsApiModel { 
-                        Email = Email,
-                        Password = parameter.SecurePassword.Unsecure(),
+                // Call the database
+                var result = await IoC.ClientDataStore.CheckLoginAsync(new LoginCredentialsDataModel
+                {
+                    Email = Email,
+                    Password = parameter.SecurePassword.Unsecure(),
                 });
 
                 // if the response has an error -> display it
-                if(await result.DisplayErrorIfFailedAsync("Login Failed")) {
+                if(result == null) {
                     // done
+                    await IoC.UI.ShowMessageBoxDialog(new DialogMessageBoxViewModel { Message = "Login Failed" }, "Login failed!");
                     return;
                 }
                 // if we got here -> successfully logged in
@@ -66,7 +67,7 @@ namespace PasswordManager.Core {
                 IoC.ApplicationViewModel.MasterHash = Crypt.Hash(parameter.SecurePassword.Unsecure());
 
                 // let the application view model what happens on the successful login
-                IoC.ApplicationViewModel.HandleSuccessfulLogin(result.ServerResponse.Response);
+                IoC.ApplicationViewModel.HandleSuccessfulLogin(result);
             });
 
         }

@@ -18,7 +18,7 @@ namespace PasswordManager.Core {
         /// </summary>
         public string MasterHash { get; set; }
 
-        public string ClientToken { get; private set; }
+        public LoginResultDataModel RunningLoginInfo { get; private set; }
 
         #endregion
 
@@ -37,13 +37,13 @@ namespace PasswordManager.Core {
         /// <summary>
         /// Handles what happens on a successful login
         /// </summary>
-        public void HandleSuccessfulLogin(LoginResultApiModel loginResult) {
-            ClientToken = loginResult.Token;
+        public void HandleSuccessfulLogin(LoginResultDataModel loginResult) {
+            RunningLoginInfo = loginResult;
             GoToPage(ApplicationPage.MainPage);
         }
 
         public void HandleLogout() {
-            ClientToken = string.Empty;
+            RunningLoginInfo = null;
             MasterHash = string.Empty;
             GoToPage(ApplicationPage.Login);
         }

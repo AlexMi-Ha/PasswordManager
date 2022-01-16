@@ -5,6 +5,7 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using Microsoft.EntityFrameworkCore;
+using PasswordManager.Data.DataModels;
 
 namespace PasswordManager.Data {
     public class ClientDataStore : IClientDataStore {
@@ -48,6 +49,36 @@ namespace PasswordManager.Data {
 
         }
 
+        public async Task<bool> AddNewUserAsync(LoginCredentialsDataModel loginCredentials) {
+            if (string.IsNullOrWhiteSpace(loginCredentials.Email)) {
+                return false;
+            }
+
+            var user = dbContext.LoginCredentials.Where(e => e.Email == loginCredentials.Email && e.Password == HashString(loginCredentials.Password)).FirstOrDefault();
+
+            if(user != null) {
+                return false;
+            }
+
+            string userId = Guid.NewGuid().ToString("N");
+            bool unique;
+            do {
+                unique = true;
+                if (dbContext.LoginCredentials.Where(e => e.UserId == userId).Any()) {
+                    userId = Guid.NewGuid().ToString("N");
+                    unique = false;
+                }
+            } while (!unique);
+            dbContext.LoginCredentials.Add(new LoginDatabaseModel {
+                Email = loginCredentials.Email,
+                Password = HashString(loginCredentials.Password),
+                UserId = userId
+            });
+
+            await dbContext.SaveChangesAsync();
+
+            return true;
+        }
 
         public async Task<GetUserContentDataModel> GetUserContentAsync(LoginResultDataModel loginInfo) {
 
@@ -104,7 +135,7 @@ namespace PasswordManager.Data {
                 }
             } while (!unique);
 
-            dbContext.UserContent.Add(new DataModels.UserContentDatabaseModel {
+            dbContext.UserContent.Add(new UserContentDatabaseModel {
                 Id = model.Id,
                 User = dbContext.LoginCredentials.Where(e => e.UserId == loginInfo.UserId).First(),
                 AccountNameHash = model.AccountNameHash,

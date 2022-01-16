@@ -18,6 +18,13 @@ namespace PasswordManager.Core {
         Task<LoginResultDataModel> CheckLoginAsync(LoginCredentialsDataModel loginCredentials);
 
         /// <summary>
+        /// Add a new user to the login database
+        /// </summary>
+        /// <param name="loginCredentials"></param>
+        /// <returns></returns>
+        Task<bool> AddNewUserAsync(LoginCredentialsDataModel loginCredentials);
+
+        /// <summary>
         /// Get all user content from a specific user
         /// </summary>
         /// <param name="loginInfo"></param>

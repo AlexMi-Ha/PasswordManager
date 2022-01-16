@@ -365,3 +365,4 @@ FodyWeavers.xsd
 PasswordManager.Web.Server/
 PasswordManager.Web.Server.sln
 Routes/
+PasswordManager/appsettings.json
