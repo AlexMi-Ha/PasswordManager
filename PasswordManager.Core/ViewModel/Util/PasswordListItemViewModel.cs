@@ -9,6 +9,7 @@ namespace PasswordManager.Core {
     /// </summary>
     public class PasswordListItemViewModel : PasswordItemViewModel {
 
+        private MainPageViewModel mainVm;
 
         #region Commands
         public ICommand CopyPasswordCommand { get; set; }
@@ -20,10 +21,11 @@ namespace PasswordManager.Core {
         /// <summary>
         /// Default Constructor
         /// </summary>
-        public PasswordListItemViewModel() {
+        public PasswordListItemViewModel(MainPageViewModel mainVm) {
+            this.mainVm = mainVm;
             // Initialize the Commands
             EditAccountCommand = new RelayCommand(async () => await EditAccount());
-            DeleteAccountCommand = new RelayCommand(DeleteAccount);
+            DeleteAccountCommand = new RelayCommand(async () => await DeleteAccount());
             CopyPasswordCommand = new RelayParameterizedCommand<ICopyClipboard>((parameter) => CopyPassword(parameter));
 
         }
@@ -95,8 +97,22 @@ namespace PasswordManager.Core {
         /// <summary>
         /// Delete this account
         /// </summary>
-        private void DeleteAccount() {
+        private async Task DeleteAccount() {
             // TODO
+            var vm = new DialogChoiceBoxViewModel { Message = "Do you really want to delete this account?" };
+            await IoC.UI.ShowChoiceBoxDialog(vm, "Delete");
+
+            if(vm.DialogResult == false) {
+                return;
+            }
+            bool result = await IoC.ClientDataStore.RemoveUserContentAsync(
+                IoC.ApplicationViewModel.RunningLoginInfo,
+                Id
+            );
+
+            if(result) {
+                mainVm.Accounts.Remove(this);
+            }
         }
 
         #endregion

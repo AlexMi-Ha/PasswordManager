@@ -110,7 +110,7 @@ namespace PasswordManager.Core {
             }
 
             // return the retrieved data
-            return result.UserContent.Select(e => new PasswordListItemViewModel {
+            return result.UserContent.Select(e => new PasswordListItemViewModel(this) {
                 Id = e.Id,
                 AccountName = Crypt.DecryptString(IoC.ApplicationViewModel.MasterHash, e.AccountNameHash),
                 Email = Crypt.DecryptString(IoC.ApplicationViewModel.MasterHash, e.EmailHash),
@@ -203,7 +203,7 @@ namespace PasswordManager.Core {
             }
 
             // add the new Account to the view
-            Accounts.Add(new PasswordListItemViewModel {
+            Accounts.Add(new PasswordListItemViewModel(this) {
                 Id = result.Id,
                 AccountName = viewModel.AccountName,
                 Email = viewModel.Email,

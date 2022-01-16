@@ -6,23 +6,22 @@ namespace PasswordManager.Core {
     /// <summary>
     /// View Model for the Message Dialog Box
     /// </summary>
-    public class DialogChoiceBoxViewModel :  DialogMessageBoxViewModel {
+    public class DialogMessageBoxViewModel :  BaseViewModel {
 
         #region Public Properties
-
         /// <summary>
-        /// Result of this dialog
+        /// Message for the messagebox dialog
         /// </summary>
-        public bool DialogResult { get; private set; } = false;
-
+        public string Message { get; set; }
         #endregion
+
 
         #region Commands
 
         /// <summary>
-        /// Command when the cancel button is pressed
+        /// Command when the ok button is pressed
         /// </summary>
-        public ICommand CancelCommand { get; set; }
+        public ICommand OkCommand { get; set; }
 
         #endregion
 
@@ -30,9 +29,8 @@ namespace PasswordManager.Core {
         /// <summary>
         /// Default Constructor
         /// </summary>
-        public DialogChoiceBoxViewModel() {
+        public DialogMessageBoxViewModel() {
             // Initialize Commands
-            CancelCommand = new RelayParameterizedCommand<ICloseable>((parameter) => Cancel(parameter));
             OkCommand = new RelayParameterizedCommand<ICloseable>((parameter) => Ok(parameter));
         }
 
@@ -41,21 +39,10 @@ namespace PasswordManager.Core {
 
         #region Methods
         /// <summary>
-        /// Methods for when the Dialog Cancel button is pressed
-        /// </summary>
-        /// <param name="parameter"></param>
-        private void Cancel(ICloseable parameter) {
-            DialogResult = false;
-            // Close this dialog
-            parameter.Close();
-        }
-
-        /// <summary>
         /// Methods for when the Dialog Ok button is pressed
         /// </summary>
         /// <param name="parameter"></param>
         private void Ok(ICloseable parameter) {
-            DialogResult = true;
             // Close this dialog
             parameter.Close();
         }

@@ -42,5 +42,12 @@ namespace PasswordManager {
             };
             return b.ShowDialog(viewModel);
         }
+
+        public Task ShowChoiceBoxDialog(DialogChoiceBoxViewModel viewModel, string title) {
+            ChoiceDialogBox b = new ChoiceDialogBox {
+                Title = title
+            };
+            return b.ShowDialog(viewModel);
+        }
     }
 }

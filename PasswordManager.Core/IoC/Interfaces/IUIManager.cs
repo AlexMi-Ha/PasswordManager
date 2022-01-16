@@ -20,6 +20,14 @@ namespace PasswordManager.Core {
         Task ShowMessageBoxDialog(DialogMessageBoxViewModel viewModel, string title);
 
         /// <summary>
+        /// Displays a dialg that displays a message and gives an ok and cancel button
+        /// </summary>
+        /// <param name="viewModel"></param>
+        /// <param name="title"></param>
+        /// <returns></returns>
+        Task ShowChoiceBoxDialog(DialogChoiceBoxViewModel viewModel, string title);
+
+        /// <summary>
         /// Display a Search dialog box
         /// </summary>
         /// <param name="viewModel">ViewModel to display</param>
