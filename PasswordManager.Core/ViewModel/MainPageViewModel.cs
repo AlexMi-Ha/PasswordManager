@@ -99,7 +99,7 @@ namespace PasswordManager.Core {
         /// <returns></returns>
         private async Task<List<PasswordListItemViewModel>> GetUserContent() {
             // get the info from the database
-            var result = await IoC.ClientDataStore.GetUserContentAsync(
+            GetUserContentDataModel result = await IoC.ClientDataStore.GetUserContentAsync(
                 IoC.ApplicationViewModel.RunningLoginInfo
                 );
 
@@ -182,7 +182,7 @@ namespace PasswordManager.Core {
             }
 
             // Call the database
-            var result = await IoC.ClientDataStore.AddUserContentAsync(
+            UserContentDataModel result = await IoC.ClientDataStore.AddUserContentAsync(
                 IoC.ApplicationViewModel.RunningLoginInfo,
                 new UserContentDataModel {
                     Id = Guid.NewGuid().ToString("N"),

@@ -62,7 +62,7 @@ namespace PasswordManager.Core {
             }
 
             // Call the database
-            var result = await IoC.ClientDataStore.UpdateUserContentAsync(
+            UserContentDataModel result = await IoC.ClientDataStore.UpdateUserContentAsync(
                 IoC.ApplicationViewModel.RunningLoginInfo,
                 new UserContentDataModel {
                     Id = viewModel.Id,

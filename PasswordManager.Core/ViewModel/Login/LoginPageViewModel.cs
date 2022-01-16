@@ -50,7 +50,7 @@ namespace PasswordManager.Core {
             await RunCommandAsync(() => this.LoginIsRunning, async () => {
 
                 // Call the database
-                var result = await IoC.ClientDataStore.CheckLoginAsync(new LoginCredentialsDataModel
+                LoginResultDataModel result = await IoC.ClientDataStore.CheckLoginAsync(new LoginCredentialsDataModel
                 {
                     Email = Email,
                     Password = parameter.SecurePassword.Unsecure(),
