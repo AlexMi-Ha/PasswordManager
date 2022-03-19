@@ -53,7 +53,7 @@ namespace PasswordManager.Core {
                 LoginResultDataModel result = await IoC.ClientDataStore.CheckLoginAsync(new LoginCredentialsDataModel
                 {
                     Email = Email,
-                    Password = parameter.SecurePassword.Unsecure(),
+                    Password = parameter.SecurePassword[0].Unsecure(),
                 });
 
                 // if the response has an error -> display it
@@ -64,7 +64,7 @@ namespace PasswordManager.Core {
                 }
                 // if we got here -> successfully logged in
 
-                IoC.ApplicationViewModel.MasterHash = Crypt.Hash(parameter.SecurePassword.Unsecure());
+                IoC.ApplicationViewModel.MasterHash = Crypt.Hash(parameter.SecurePassword[0].Unsecure());
 
                 // let the application view model what happens on the successful login
                 IoC.ApplicationViewModel.HandleSuccessfulLogin(result);

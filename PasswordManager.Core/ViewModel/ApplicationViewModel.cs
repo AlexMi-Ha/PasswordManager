@@ -11,7 +11,7 @@ namespace PasswordManager.Core {
         /// <summary>
         /// The current Page of the Application
         /// </summary>
-        public ApplicationPage CurrentPage { get; private set; } = ApplicationPage.Login;
+        public ApplicationPage CurrentPage { get; private set; } = ApplicationPage.Register;
 
         /// <summary>
         /// Hash of the users master password. Used as a key for en/decryption

@@ -1,4 +1,5 @@
 ﻿
+using System.Collections.Generic;
 using System.Security;
 
 namespace PasswordManager.Core {
@@ -10,6 +11,6 @@ namespace PasswordManager.Core {
         /// <summary>
         /// The secure password
         /// </summary>
-        SecureString SecurePassword { get; }
+        List<SecureString> SecurePassword { get; }
     }
 }

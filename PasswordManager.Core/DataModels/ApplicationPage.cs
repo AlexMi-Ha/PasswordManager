@@ -4,6 +4,7 @@
     /// </summary>
     public enum ApplicationPage {
         Login = 0,
-        MainPage = 1,
+        Register = 1,
+        MainPage = 2,
     }
 }

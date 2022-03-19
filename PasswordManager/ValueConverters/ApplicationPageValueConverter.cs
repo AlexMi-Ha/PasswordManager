@@ -13,6 +13,8 @@ namespace PasswordManager {
             switch((ApplicationPage)value) {
                 case ApplicationPage.Login:
                     return new LoginPage();
+                case ApplicationPage.Register:
+                    return new RegisterPage();
                 case ApplicationPage.MainPage:
                     return new MainPage();
                 default:

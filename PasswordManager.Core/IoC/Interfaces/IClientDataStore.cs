@@ -22,7 +22,7 @@ namespace PasswordManager.Core {
         /// </summary>
         /// <param name="loginCredentials"></param>
         /// <returns></returns>
-        Task<bool> AddNewUserAsync(LoginCredentialsDataModel loginCredentials);
+        Task<RegisterResultDataModel> AddNewUserAsync(LoginCredentialsDataModel loginCredentials);
 
         /// <summary>
         /// Get all user content from a specific user

@@ -49,16 +49,19 @@ namespace PasswordManager.Data {
 
         }
 
-        public async Task<bool> AddNewUserAsync(LoginCredentialsDataModel loginCredentials) {
+        public async Task<RegisterResultDataModel> AddNewUserAsync(LoginCredentialsDataModel loginCredentials) {
             if (string.IsNullOrWhiteSpace(loginCredentials.Email)) {
-                return false;
+                return new RegisterResultDataModel { Successful = false, ErrorType = RegisterErrorType.Error};
             }
 
-            var user = dbContext.LoginCredentials.Where(e => e.Email == loginCredentials.Email && e.Password == HashString(loginCredentials.Password)).FirstOrDefault();
+
+            var user = dbContext.LoginCredentials.Where(e => e.Email == loginCredentials.Email)
 
             if(user != null) {
-                return false;
+                return new RegisterResultDataModel { Successful = false, ErrorType = RegisterErrorType.UserAlreadyExists };
             }
+
+            user = user.Where(e => e.Email == loginCredentials.Email && e.Password == HashString(loginCredentials.Password)).FirstOrDefault();
 
             string userId = Guid.NewGuid().ToString("N");
             bool unique;
@@ -77,7 +80,7 @@ namespace PasswordManager.Data {
 
             await dbContext.SaveChangesAsync();
 
-            return true;
+            return new RegisterResultDataModel { Successful = true, ErrorType = RegisterErrorType.None, Email = loginCredentials.Email, UserId=userId };
         }
 
         public async Task<GetUserContentDataModel> GetUserContentAsync(LoginResultDataModel loginInfo) {

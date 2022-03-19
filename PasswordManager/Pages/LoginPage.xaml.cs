@@ -1,5 +1,6 @@
 ﻿
 using PasswordManager.Core;
+using System.Collections.Generic;
 using System.Security;
 
 namespace PasswordManager {
@@ -12,6 +13,6 @@ namespace PasswordManager {
             EmailText.Focus();
         }
 
-        public SecureString SecurePassword => PasswordText.SecurePassword;
+        public List<SecureString> SecurePassword => new List<SecureString> { PasswordText.SecurePassword };
     }
 }
