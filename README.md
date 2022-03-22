@@ -1,5 +1,5 @@
 # PasswordManager
-Password Manager application which stores password and other account information encrypted on a local (could go public) server.
+Password Manager application which stores password and other account information encrypted locally.
 
 I mainly used this to learn more about WPF applications and the MVVM pattern
 

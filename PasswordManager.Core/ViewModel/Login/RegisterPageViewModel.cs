@@ -18,11 +18,17 @@ namespace PasswordManager.Core {
 
         public ICommand RegisterCommand { get; set; }
 
+        public ICommand ChangeToLoginCommand { get; set; }
+
         #endregion
 
         public RegisterPageViewModel() {
             RegisterCommand = new RelayParameterizedCommand<IHavePassword>(async (param) => await RegisterAsync(param));
-        }
+
+            ChangeToLoginCommand = new RelayCommand(() => {
+                IoC.ApplicationViewModel.GoToPage(ApplicationPage.Login);
+            });
+            }
 
         public async Task RegisterAsync(IHavePassword parameter) {
 

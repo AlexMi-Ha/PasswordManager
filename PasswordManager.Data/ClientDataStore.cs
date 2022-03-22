@@ -30,22 +30,24 @@ namespace PasswordManager.Data {
             await dbContext.Database.EnsureCreatedAsync();
         }
 
-        public Task<LoginResultDataModel> CheckLoginAsync(LoginCredentialsDataModel loginCredentials) {
+        public async Task<LoginResultDataModel> CheckLoginAsync(LoginCredentialsDataModel loginCredentials) {
             if (string.IsNullOrWhiteSpace(loginCredentials.Email)) {
-                return null;
+                return new LoginResultDataModel { Successful = false };
             }
 
             var user = dbContext.LoginCredentials.Where(e => e.Email == loginCredentials.Email && e.Password == HashString(loginCredentials.Password)).FirstOrDefault();
             
             if(user == null) {
-                return null;
+                return new LoginResultDataModel {
+                    Successful = false
+                };
             }
 
-            return Task.FromResult(new LoginResultDataModel {
+            return new LoginResultDataModel {
                 Email = user.Email,
                 Successful = true,
                 UserId = user.UserId
-            });
+            };
 
         }
 
@@ -55,13 +57,12 @@ namespace PasswordManager.Data {
             }
 
 
-            var user = dbContext.LoginCredentials.Where(e => e.Email == loginCredentials.Email)
+            var users = dbContext.LoginCredentials.Where(e => e.Email == loginCredentials.Email);
 
-            if(user != null) {
+            if(users?.Count() > 0) {
                 return new RegisterResultDataModel { Successful = false, ErrorType = RegisterErrorType.UserAlreadyExists };
             }
-
-            user = user.Where(e => e.Email == loginCredentials.Email && e.Password == HashString(loginCredentials.Password)).FirstOrDefault();
+            //var user = users.Where(e => e.Email == loginCredentials.Email && e.Password == HashString(loginCredentials.Password)).FirstOrDefault();
 
             string userId = Guid.NewGuid().ToString("N");
             bool unique;

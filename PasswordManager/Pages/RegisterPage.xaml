@@ -30,6 +30,21 @@
 
                         <!-- Button to register -->
                         <Button IsDefault="True" local:IsBusyProperty.Value="{Binding RegisterIsRunning}" Command="{Binding RegisterCommand}" CommandParameter="{Binding ElementName=Page}"  Style="{StaticResource LoginButton}" Content="Confirm" HorizontalAlignment="Center"/>
+                        
+                        <!-- Button to change to Login page -->
+                        <Button Command="{Binding ChangeToLoginCommand}" Cursor="Hand">
+                            <Button.Content>
+                                <TextBlock TextDecorations="Underline">
+                                   Already have an account? Click here to Login!
+                                </TextBlock>
+                            </Button.Content>
+                            <Button.Template>
+                                <ControlTemplate TargetType="{x:Type Button}">
+                                    <ContentPresenter />
+                                </ControlTemplate>
+                            </Button.Template>
+                        </Button>
+
                     </StackPanel>
                 </Border>
             </StackPanel>

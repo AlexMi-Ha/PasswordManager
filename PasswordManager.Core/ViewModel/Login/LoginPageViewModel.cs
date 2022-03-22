@@ -30,12 +30,16 @@ namespace PasswordManager.Core {
 
         public ICommand LoginCommand { get; set; }
 
+        public ICommand ChangeToRegisterCommand { get; set; }
+
         #endregion
 
         #region Contructor
         public LoginPageViewModel() {
             LoginCommand = new RelayParameterizedCommand<IHavePassword>(async (parameter) => await LoginAsync(parameter));
-
+            ChangeToRegisterCommand = new RelayCommand(() => {
+                IoC.ApplicationViewModel.GoToPage(ApplicationPage.Register);
+            });
         }
         #endregion
 
@@ -57,7 +61,7 @@ namespace PasswordManager.Core {
                 });
 
                 // if the response has an error -> display it
-                if(result == null) {
+                if(result == null || !result.Successful) {
                     // done
                     await IoC.UI.ShowMessageBoxDialog(new DialogMessageBoxViewModel { Message = "Login Failed" }, "Login failed!");
                     return;
