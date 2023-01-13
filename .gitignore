@@ -366,4 +366,4 @@ PasswordManager.Web.Server/
 PasswordManager.Web.Server.sln
 Routes/
 PasswordManager/appsettings.json
-PasswordManager/Security/Secret.cs
+PasswordManager.Core/Security/Secret.cs
