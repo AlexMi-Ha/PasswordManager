@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PasswordManager.Core.Security;
+using System;
 using System.IO;
 using System.Security.Cryptography;
 using System.Text;
@@ -120,6 +121,10 @@ namespace PasswordManager.Core {
                 }
             }
             return string.Join(null, password);
+        }
+
+        public static string PassSecret() {
+            return Secret.Key;
         }
 
     }
