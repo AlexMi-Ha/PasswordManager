@@ -27,6 +27,8 @@
 
                         <!-- Button to login -->
                         <Button IsDefault="True" local:IsBusyProperty.Value="{Binding LoginIsRunning}" Command="{Binding LoginCommand}" CommandParameter="{Binding ElementName=Page}"  Style="{StaticResource LoginButton}" Content="Confirm" HorizontalAlignment="Center"/>
+
+                        <Button Style="{StaticResource Hoverless}" Command="{Binding ChangeFolderCommand}" Content="Change Folder" HorizontalAlignment="Center"/>
                     </StackPanel>
                 </Border>
             </StackPanel>

@@ -1,7 +1,11 @@
 ﻿
 using Dna;
+using PasswordManager.Core.Security;
+using System;
+using System.IO;
 using System.Security;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using System.Windows.Input;
 
 namespace PasswordManager.Core {
@@ -29,16 +33,31 @@ namespace PasswordManager.Core {
         #region Commands
 
         public ICommand LoginCommand { get; set; }
+        public ICommand ChangeFolderCommand { get; set; }
 
         #endregion
 
         #region Contructor
         public LoginPageViewModel() {
             LoginCommand = new RelayParameterizedCommand<IHavePassword>(async (parameter) => await LoginAsync(parameter));
-
+            ChangeFolderCommand = new RelayCommand(ChangeFolder);
         }
         #endregion
 
+
+        public void ChangeFolder() {
+            using (var fbd = new FolderBrowserDialog()) {
+                DialogResult result = fbd.ShowDialog();
+                if (result == DialogResult.OK && !string.IsNullOrWhiteSpace(fbd.SelectedPath)) {
+                    using (var f = new StreamWriter(".loc", false)) {
+                        f.WriteLine(Crypt.EncryptString(Secret.Key,fbd.SelectedPath));
+                        f.Flush();
+                    }
+                MessageBox.Show("Requires Restart!", "Restart", MessageBoxButtons.OK);
+                Environment.Exit(0);
+                }
+            }
+        }
 
         /// <summary>
         /// Attempts to log the user in
