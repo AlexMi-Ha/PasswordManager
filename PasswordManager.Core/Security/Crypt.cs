@@ -1,21 +1,11 @@
-﻿using PasswordManager.Core.Security;
-using System;
+﻿using System;
 using System.IO;
 using System.Security.Cryptography;
 using System.Text;
 
-namespace PasswordManager.Core {
-    /// <summary>
-    /// This class contains helpers to handle Encryption, Decryption and Hashing or to generate random Passwords
-    /// </summary>
+namespace PasswordManager.Core.Security {
     public static class Crypt {
 
-        /// <summary>
-        /// Encrypt a String using a Key
-        /// </summary>
-        /// <param name="key">Key used for the symmetric encryption</param>
-        /// <param name="plainText">PlainText to encrypt</param>
-        /// <returns></returns>
         public static string EncryptString(string key, string plainText) {
             if (string.IsNullOrWhiteSpace(plainText))
                 return "";
@@ -41,12 +31,6 @@ namespace PasswordManager.Core {
             return Convert.ToBase64String(encryptArray);
         }
 
-        /// <summary>
-        /// Decrypt a String using a Key
-        /// </summary>
-        /// <param name="key">Key used to the symmetric decryption</param>
-        /// <param name="cipherText">Ciphertext to decrypt</param>
-        /// <returns></returns>
         public static string DecryptString(string key, string cipherText) {
             if (string.IsNullOrWhiteSpace(cipherText))
                 return "";
@@ -69,11 +53,6 @@ namespace PasswordManager.Core {
             }
         }
 
-        /// <summary>
-        /// Hashing a string
-        /// </summary>
-        /// <param name="plainText">PlainText to hash</param>
-        /// <returns></returns>
         public static string Hash(string plainText) {
             using (var crypt = MD5.Create()) {
                 byte[] crypto = crypt.ComputeHash(Encoding.UTF8.GetBytes(plainText));

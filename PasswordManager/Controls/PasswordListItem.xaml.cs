@@ -1,9 +1,10 @@
-﻿using PasswordManager.Core;
+﻿using PasswordManager.Core.Common.Interfaces.ViewModelAttributes;
 using System;
 using System.Windows;
 using System.Windows.Controls;
 
-namespace PasswordManager {
+namespace PasswordManager
+{
     /// <summary>
     /// Interaction logic for PasswordListItem.xaml
     /// </summary>

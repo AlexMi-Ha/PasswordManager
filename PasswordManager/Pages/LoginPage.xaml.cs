@@ -1,8 +1,10 @@
 ﻿
 using PasswordManager.Core;
+using PasswordManager.Core.Common.Interfaces.ViewModelAttributes;
 using System.Security;
 
-namespace PasswordManager {
+namespace PasswordManager
+{
     /// <summary>
     /// Interaction logic for LoginPage.xaml
     /// </summary>

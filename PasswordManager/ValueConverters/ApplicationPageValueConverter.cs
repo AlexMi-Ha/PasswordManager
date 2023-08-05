@@ -1,9 +1,10 @@
-﻿using PasswordManager.Core;
+﻿using PasswordManager.Core.Common.Enums;
 using System;
 using System.Diagnostics;
 using System.Globalization;
 
-namespace PasswordManager {
+namespace PasswordManager
+{
     /// <summary>
     /// Converts <see cref="ApplicationPage"/> to an actual view page
     /// </summary>

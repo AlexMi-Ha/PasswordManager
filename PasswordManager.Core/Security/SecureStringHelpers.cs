@@ -2,17 +2,9 @@
 using System.Runtime.InteropServices;
 using System.Security;
 
-namespace PasswordManager.Core {
-    /// <summary>
-    /// Helpers for the SecureString class
-    /// </summary>
+namespace PasswordManager.Core.Security {
     public static class SecureStringHelpers {
 
-        /// <summary>
-        /// Unsecures a SecureString to plain text
-        /// </summary>
-        /// <param name="secureString"></param>
-        /// <returns></returns>
         public static string Unsecure(this SecureString secureString) {
             if (secureString == null)
                 return string.Empty;

@@ -1,8 +1,11 @@
 ﻿
 using System.Threading.Tasks;
+using PasswordManager.Core.Common.DataModels.Database;
 
-namespace PasswordManager.Core {
-    public interface IClientDataStore {
+namespace PasswordManager.Core.Common.Interfaces.Services
+{
+    public interface IClientDataStore
+    {
 
         /// <summary>
         /// Makes sure the client data store is correctly set up
@@ -37,7 +40,7 @@ namespace PasswordManager.Core {
         /// <param name="loginInfo"></param>
         /// <param name="model"></param>
         /// <returns></returns>
-        Task<UserContentDataModel> UpdateUserContentAsync(LoginResultDataModel loginInfo, UserContentDataModel model);
+        Task<UserContentDataModel> UpdateUserContentAsync(UserContentDataModel model);
 
         /// <summary>
         /// Add one user content entry to a specific user
@@ -45,7 +48,7 @@ namespace PasswordManager.Core {
         /// <param name="loginInfo"></param>
         /// <param name="model"></param>
         /// <returns></returns>
-        Task<UserContentDataModel> AddUserContentAsync(LoginResultDataModel loginInfo, UserContentDataModel model);
+        Task<UserContentDataModel> AddUserContentAsync(UserContentDataModel model);
 
         /// <summary>
         /// Remove one user content entry of a specific user

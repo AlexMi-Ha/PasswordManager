@@ -54,14 +54,14 @@
                             <fa:IconBlock Icon="Search" Foreground="{StaticResource TextForegroundLightBrush}"/>
                         </Button.Content>
                     </Button>
-                    
+
                     <!-- Add Password Button -->
                     <Button Command="{Binding AddPasswordCommand}" Style="{StaticResource MenuPanelButton}" Tag="Add Password" >
                         <Button.Content>
                             <fa:IconBlock Icon="plus" Foreground="{StaticResource TextForegroundLightBrush}"/>
                         </Button.Content>
                     </Button>
-                    
+
                 </StackPanel>
             </Border>
 

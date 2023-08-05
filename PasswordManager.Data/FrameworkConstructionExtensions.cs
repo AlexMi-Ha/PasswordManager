@@ -1,8 +1,5 @@
-﻿using Dna;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using PasswordManager.Core;
 using System.IO;
 
 namespace PasswordManager.Data {

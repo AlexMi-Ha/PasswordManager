@@ -1,9 +1,12 @@
-﻿using Dna;
-using System;
+﻿using PasswordManager.Core.Common.DataModels.Database;
+using PasswordManager.Core.Common.Interfaces.ViewModelAttributes;
+using PasswordManager.Core.ViewModel.Base;
+using PasswordManager.Core.ViewModel.Util.Base;
+using PasswordManager.Core.ViewModel.Util.Dialogs;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
-namespace PasswordManager.Core {
+namespace PasswordManager.Core.ViewModel.Util {
     /// <summary>
     /// View model for the PasswordList Item
     /// </summary>
@@ -11,16 +14,10 @@ namespace PasswordManager.Core {
 
         private MainPageViewModel mainVm;
 
-        #region Commands
         public ICommand CopyPasswordCommand { get; set; }
         public ICommand EditAccountCommand { get; set; }
         public ICommand DeleteAccountCommand { get; set; }
-        #endregion
 
-        #region Constructor
-        /// <summary>
-        /// Default Constructor
-        /// </summary>
         public PasswordListItemViewModel(MainPageViewModel mainVm) {
             this.mainVm = mainVm;
             // Initialize the Commands
@@ -29,22 +26,11 @@ namespace PasswordManager.Core {
             CopyPasswordCommand = new RelayParameterizedCommand<ICopyClipboard>((parameter) => CopyPassword(parameter));
 
         }
-        #endregion
 
-        #region Methods
-
-        /// <summary>
-        /// Tell the ui to copy the password to clipboard
-        /// UI handles it as it is operating system specific
-        /// </summary>
-        /// <param name="parameter"></param>
         private void CopyPassword(ICopyClipboard parameter) {
             parameter.CopyToClipboard(Password);
         }
 
-        /// <summary>
-        /// Edit this account
-        /// </summary>
         private async Task EditAccount() {
             // Fill the view Model with the information
             DialogPasswordItemViewModel viewModel = new DialogPasswordItemViewModel {
@@ -94,9 +80,6 @@ namespace PasswordManager.Core {
             Notes = viewModel.Notes;
         }
 
-        /// <summary>
-        /// Delete this account
-        /// </summary>
         private async Task DeleteAccount() {
             // TODO
             var vm = new DialogChoiceBoxViewModel { Message = "Do you really want to delete this account?" };
@@ -115,6 +98,5 @@ namespace PasswordManager.Core {
             }
         }
 
-        #endregion
     }
 }

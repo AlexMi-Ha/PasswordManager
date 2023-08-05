@@ -1,29 +1,20 @@
-﻿using System.Security;
+﻿using PasswordManager.Core.Common.Enums;
+using PasswordManager.Core.ViewModel.Base;
 
-namespace PasswordManager.Core {
+namespace PasswordManager.Core.ViewModel {
     /// <summary>
     /// ApplicationState as a ViewModel
     /// </summary>
     public class ApplicationViewModel : BaseViewModel {
 
 
-        #region Public Properties
-        /// <summary>
-        /// The current Page of the Application
-        /// </summary>
         public ApplicationPage CurrentPage { get; private set; } = ApplicationPage.Login;
 
-        /// <summary>
-        /// Hash of the users master password. Used as a key for en/decryption
-        /// </summary>
         public string MasterHash { get; set; }
 
         public LoginResultDataModel RunningLoginInfo { get; private set; }
 
-        #endregion
 
-
-        #region Public Methods
 
         /// <summary>
         /// Navigates to a specified page
@@ -34,9 +25,6 @@ namespace PasswordManager.Core {
             CurrentPage = page;
         }
 
-        /// <summary>
-        /// Handles what happens on a successful login
-        /// </summary>
         public void HandleSuccessfulLogin(LoginResultDataModel loginResult) {
             RunningLoginInfo = loginResult;
             GoToPage(ApplicationPage.MainPage);
@@ -47,6 +35,5 @@ namespace PasswordManager.Core {
             MasterHash = string.Empty;
             GoToPage(ApplicationPage.Login);
         }
-        #endregion
     }
 }

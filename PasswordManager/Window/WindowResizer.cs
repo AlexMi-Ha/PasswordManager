@@ -5,63 +5,27 @@ using System.Windows.Interop;
 using System.Windows.Media;
 
 namespace PasswordManager {
-    /// <summary>
-    /// The dock position of the window
-    /// </summary>
     public enum WindowDockPosition {
-        /// <summary>
-        /// Not docked
-        /// </summary>
         Undocked,
-        /// <summary>
-        /// Docked to the left of the screen
-        /// </summary>
         Left,
-        /// <summary>
-        /// Docked to the right of the screen
-        /// </summary>
         Right,
     }
 
-    /// <summary>
-    /// Fixes the issue with Windows of Style <see cref="WindowStyle.None"/> covering the taskbar
-    /// </summary>
     public class WindowResizer {
-        #region Private Members
-
-        /// <summary>
-        /// The window to handle the resizing for
-        /// </summary>
+        
         private Window mWindow;
 
-        /// <summary>
-        /// The last calculated available screen size
-        /// </summary>
         private Rect mScreenSize = new Rect();
 
-        /// <summary>
-        /// How close to the edge the window has to be to be detected as at the edge of the screen
-        /// </summary>
         private int mEdgeTolerance = 2;
 
-        /// <summary>
-        /// The transform matrix used to convert WPF sizes to screen pixels
-        /// </summary>
         private Matrix mTransformToDevice;
 
-        /// <summary>
-        /// The last screen the window was on
-        /// </summary>
         private IntPtr mLastScreen;
 
-        /// <summary>
-        /// The last known dock position
-        /// </summary>
         private WindowDockPosition mLastDock = WindowDockPosition.Undocked;
 
-        #endregion
 
-        #region Dll Imports
 
         [DllImport("user32.dll")]
         [return: MarshalAs(UnmanagedType.Bool)]
@@ -73,24 +37,9 @@ namespace PasswordManager {
         [DllImport("user32.dll", SetLastError = true)]
         static extern IntPtr MonitorFromPoint(POINT pt, MonitorOptions dwFlags);
 
-        #endregion
-
-        #region Public Events
-
-        /// <summary>
-        /// Called when the window dock position changes
-        /// </summary>
         public event Action<WindowDockPosition> WindowDockChanged = (dock) => { };
 
-        #endregion
 
-        #region Constructor
-
-        /// <summary>
-        /// Default constructor
-        /// </summary>
-        /// <param name="window">The window to monitor and correctly maximize</param>
-        /// <param name="adjustSize">The callback for the host to adjust the maximum available size if needed</param>
         public WindowResizer(Window window) {
             mWindow = window;
 
@@ -104,13 +53,7 @@ namespace PasswordManager {
             mWindow.SizeChanged += Window_SizeChanged;
         }
 
-        #endregion
 
-        #region Initialize
-
-        /// <summary>
-        /// Gets the transform object used to convert WPF sizes to screen pixels
-        /// </summary>
         private void GetTransform() {
             // Get the visual source
             var source = PresentationSource.FromVisual(mWindow);
@@ -126,11 +69,6 @@ namespace PasswordManager {
             mTransformToDevice = source.CompositionTarget.TransformToDevice;
         }
 
-        /// <summary>
-        /// Initialize and hook into the windows message pump
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void Window_SourceInitialized(object sender, System.EventArgs e) {
             // Get the handle of this window
             var handle = (new WindowInteropHelper(mWindow)).Handle;
@@ -144,15 +82,7 @@ namespace PasswordManager {
             handleSource.AddHook(WindowProc);
         }
 
-        #endregion
 
-        #region Edge Docking
-
-        /// <summary>
-        /// Monitors for size changes and detects if the window has been docked (Aero snap) to an edge
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void Window_SizeChanged(object sender, SizeChangedEventArgs e) {
             // We cannot find positioning until the window transform has been established
             if (mTransformToDevice == default(Matrix))
@@ -198,19 +128,7 @@ namespace PasswordManager {
             mLastDock = dock;
         }
 
-        #endregion
 
-        #region Windows Proc
-
-        /// <summary>
-        /// Listens out for all windows messages for this window
-        /// </summary>
-        /// <param name="hwnd"></param>
-        /// <param name="msg"></param>
-        /// <param name="wParam"></param>
-        /// <param name="lParam"></param>
-        /// <param name="handled"></param>
-        /// <returns></returns>
         private IntPtr WindowProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled) {
             switch (msg) {
                 // Handle the GetMinMaxInfo of the Window
@@ -223,14 +141,6 @@ namespace PasswordManager {
             return (IntPtr)0;
         }
 
-        #endregion
-
-        /// <summary>
-        /// Get the min/max window size for this window
-        /// Correctly accounting for the taskbar size and position
-        /// </summary>
-        /// <param name="hwnd"></param>
-        /// <param name="lParam"></param>
         private void WmGetMinMaxInfo(System.IntPtr hwnd, System.IntPtr lParam) {
             // Get the point position to determine what screen we are on
             POINT lMousePosition;
@@ -286,7 +196,6 @@ namespace PasswordManager {
         }
     }
 
-    #region Dll Helper Structures
 
     enum MonitorOptions : uint {
         MONITOR_DEFAULTTONULL = 0x00000000,
@@ -345,5 +254,4 @@ namespace PasswordManager {
         }
     }
 
-    #endregion
 }

@@ -1,48 +1,32 @@
 ﻿
-using Dna;
+using PasswordManager.Core.Common.Interfaces.ViewModelAttributes;
 using PasswordManager.Core.Security;
+using PasswordManager.Core.ViewModel.Base;
 using System;
 using System.IO;
-using System.Security;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Input;
 
-namespace PasswordManager.Core {
+namespace PasswordManager.Core.ViewModel.Login {
     /// <summary>
     /// View model for the login page
     /// </summary>
     public class LoginPageViewModel : BaseViewModel {
 
 
-        #region Public Properties
-
-        /// <summary>
-        /// Email of the user trying to log in
-        /// </summary>
         public string Email { get; set; }
 
-        /// <summary>
-        /// Flag indicating if the logincommand is running
-        /// </summary>
         public bool LoginIsRunning { get; set; }
 
-        #endregion
-
-
-        #region Commands
 
         public ICommand LoginCommand { get; set; }
         public ICommand ChangeFolderCommand { get; set; }
 
-        #endregion
-
-        #region Contructor
         public LoginPageViewModel() {
             LoginCommand = new RelayParameterizedCommand<IHavePassword>(async (parameter) => await LoginAsync(parameter));
             ChangeFolderCommand = new RelayCommand(ChangeFolder);
         }
-        #endregion
 
 
         public void ChangeFolder() {
@@ -59,11 +43,6 @@ namespace PasswordManager.Core {
             }
         }
 
-        /// <summary>
-        /// Attempts to log the user in
-        /// </summary>
-        /// <param name="parameter"></param>
-        /// <returns>SecureString passed in from the view</returns>
         public async Task LoginAsync(IHavePassword parameter) {
 
             await RunCommandAsync(() => this.LoginIsRunning, async () => {

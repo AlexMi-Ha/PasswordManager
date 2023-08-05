@@ -1,7 +1,7 @@
 ﻿
 using System.Security;
 
-namespace PasswordManager.Core {
+namespace PasswordManager.Core.Common.Interfaces.ViewModelAttributes {
 
     /// <summary>
     /// Interface for a class that can provide a secure password

@@ -1,4 +1,8 @@
-﻿using Dna;
+﻿using PasswordManager.Core.Common.DataModels.Database;
+using PasswordManager.Core.Security;
+using PasswordManager.Core.ViewModel.Base;
+using PasswordManager.Core.ViewModel.Util;
+using PasswordManager.Core.ViewModel.Util.Dialogs;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -6,68 +10,28 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
-namespace PasswordManager.Core {
+namespace PasswordManager.Core.ViewModel {
     /// <summary>
     /// View Model for the main page of the application
     /// </summary>
     public class MainPageViewModel : BaseViewModel {
 
-        #region Private Attributes
-
-        #endregion
-
-        #region Public Properties
-
-        /// <summary>
-        /// Height of the Page Header
-        /// </summary>
         public int PageHeaderHeight { get; set; } = 0;
 
-        /// <summary>
-        /// Width of the Button Side Panel
-        /// </summary>
         public int ButtonPanelWidth { get; set; } = 240;
 
-        /// <summary>
-        /// Height of the Statusbar at the bottom of the UI
-        /// </summary>
         public int StatusBarHeight { get; set; } = 22;
-        #endregion
 
         public ObservableCollection<PasswordListItemViewModel> Accounts { get; set; }
 
-        /// <summary>
-        /// Indicats if the refresh command is currently running
-        /// </summary>
         public bool RefreshIsRunning { get; set; }
 
-        #region Commands
 
-        /// <summary>
-        /// Command when the refresh button is pressed
-        /// </summary>
         public ICommand RefreshCommand { get; set; }
-
-        /// <summary>
-        /// Command when the 'Search Password' button is pressed
-        /// </summary>
         public ICommand SearchPasswordCommand { get; set; }
-
-        /// <summary>
-        /// Command when the 'Add Password' button is pressed
-        /// </summary>
         public ICommand AddPasswordCommand { get; set; }
-
-        /// <summary>
-        /// Command when the 'Account' button is pressed
-        /// </summary>
         public ICommand LogoutButtonCommand { get; set; }
-        #endregion
 
-        #region Constructor
-        /// <summary>
-        /// Default Constructor
-        /// </summary>
         public MainPageViewModel() {
 
             // Initialize the Commands
@@ -84,19 +48,11 @@ namespace PasswordManager.Core {
             // Retrieve the users accounts
             Task.Run(async () => Accounts = new ObservableCollection<PasswordListItemViewModel>( await GetUserContent()));
         }
-        #endregion
-
-        #region Methods
-
 
         private void Logout() {
             IoC.ApplicationViewModel.HandleLogout();
         }
 
-        /// <summary>
-        /// Retrieve all user account from the server
-        /// </summary>
-        /// <returns></returns>
         private async Task<List<PasswordListItemViewModel>> GetUserContent() {
             // get the info from the database
             GetUserContentDataModel result = await IoC.ClientDataStore.GetUserContentAsync(
@@ -121,10 +77,6 @@ namespace PasswordManager.Core {
             }).ToList();
         }
 
-        /// <summary>
-        /// Method to Filter or search for specific passwords
-        /// </summary>
-        /// <returns></returns>
         private async Task SearchPassword() {
             // create the dialog
             DialogSearchBoxViewModel viewModel = new DialogSearchBoxViewModel();
@@ -168,10 +120,6 @@ namespace PasswordManager.Core {
             Accounts = new ObservableCollection<PasswordListItemViewModel>(searchContent);
         }
 
-        /// <summary>
-        /// Method to add a new password
-        /// </summary>
-        /// <returns></returns>
         private async Task AddPassword() {
             DialogPasswordItemViewModel viewModel = new DialogPasswordItemViewModel();
             await IoC.UI.ShowModifyDialog(viewModel, "Add Password");
@@ -213,9 +161,5 @@ namespace PasswordManager.Core {
                 Notes = viewModel.Notes,
             });
         }
-
-
-        #endregion
-
     }
 }

@@ -1,10 +1,10 @@
-﻿using PropertyChanged;
+﻿using PasswordManager.Core.Helpers.Expressions;
 using System;
 using System.ComponentModel;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 
-namespace PasswordManager.Core {
+namespace PasswordManager.Core.ViewModel.Base {
 
     /// <summary>
     /// Base class for all ViewModels
@@ -21,8 +21,6 @@ namespace PasswordManager.Core {
             PropertyChanged(this, new PropertyChangedEventArgs(name));
         }
 
-
-        #region Command Helpers
 
         /// <summary>
         /// Runs a command if the updating flag is not set
@@ -47,6 +45,5 @@ namespace PasswordManager.Core {
                 updatingFlag.SetPropertyValue(false);
             }
         }
-        #endregion
     }
 }

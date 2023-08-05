@@ -1,52 +1,29 @@
-﻿using System.Windows.Input;
+﻿using PasswordManager.Core.Common.Interfaces.ViewModelAttributes;
+using PasswordManager.Core.Security;
+using PasswordManager.Core.ViewModel.Base;
+using PasswordManager.Core.ViewModel.Util.Base;
+using System.Windows.Input;
 
-namespace PasswordManager.Core {
+namespace PasswordManager.Core.ViewModel.Util.Dialogs {
 
     /// <summary>
     /// Viewmodel for the edit dialog
     /// </summary>
     public class DialogPasswordItemViewModel : PasswordItemViewModel {
 
-        #region Public Properties
-        /// <summary>
-        /// Bool if the Dialog was successful (exited with a successful 'done' command)
-        /// </summary>
         public bool Success { get; set; } = false;
-        #endregion
 
-        #region Commands
-        /// <summary>
-        /// Command when the done button is pressed
-        /// </summary>
         public ICommand DoneCommand { get; set; }
-        /// <summary>
-        /// Command when the cancel button is pressed
-        /// </summary>
         public ICommand CancelCommand { get; set; }
 
-        /// <summary>
-        /// Command executed when a new Password should be generated
-        /// </summary>
         public ICommand GeneratePasswordCommand { get; set; }
 
-        #endregion
-
-        #region Constructor
-
-        /// <summary>
-        /// Default constructor
-        /// </summary>
-        /// <param name="model">ViewModel of the Main page to save the current state when entering the dialog page</param>
         public DialogPasswordItemViewModel() {
             // Initialize the commands
             DoneCommand = new RelayParameterizedCommand<ICloseable>((parameter) => Done(parameter));
             CancelCommand = new RelayParameterizedCommand<ICloseable>((parameter) => Cancel(parameter));
             GeneratePasswordCommand = new RelayCommand(GeneratePassword);
         }
-
-        #endregion
-
-        #region Methods
 
         private void Done(ICloseable window) {
             // Make sure the user entered all must have information
@@ -59,10 +36,6 @@ namespace PasswordManager.Core {
             window.Close();
         }
 
-        /// <summary>
-        /// Method when the Cancel button was clicked
-        /// Cancels the modification
-        /// </summary>
         private void Cancel(ICloseable window) {
             // Dialog was unsuccessful
             Success = false;
@@ -70,9 +43,6 @@ namespace PasswordManager.Core {
             window.Close();
         }
 
-        /// <summary>
-        /// Generates a new secure Password with the given settings and feeds it into the Password field
-        /// </summary>
         private void GeneratePassword() {
             // Todo: get settings from the settings db
             var includeLowercase = true;
@@ -84,8 +54,5 @@ namespace PasswordManager.Core {
             var maxLengthPassword = 20;
             Password = Crypt.GeneratePassword(includeLowercase, includeUppercase, includeNum, includeSpecial, disableTwoIdenticalsInARow, minLengthPassword, maxLengthPassword);
         }
-
-        #endregion
-
     }
 }

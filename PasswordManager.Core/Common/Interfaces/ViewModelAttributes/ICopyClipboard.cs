@@ -1,4 +1,4 @@
-﻿namespace PasswordManager.Core {
+﻿namespace PasswordManager.Core.Common.Interfaces.ViewModelAttributes {
     /// <summary>
     /// Interface used to copy something to clipboard
     /// </summary>

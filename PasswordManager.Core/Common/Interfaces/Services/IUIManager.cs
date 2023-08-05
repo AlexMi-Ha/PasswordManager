@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace PasswordManager.Core {
+namespace PasswordManager.Core.Common.Interfaces.Services {
     public interface IUIManager {
 
         /// <summary>
