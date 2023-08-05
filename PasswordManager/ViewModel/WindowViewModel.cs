@@ -1,4 +1,4 @@
-﻿using PasswordManager.Core;
+﻿using PasswordManager.Core.ViewModel.Base;
 using System.Windows;
 using System.Windows.Input;
 

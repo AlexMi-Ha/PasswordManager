@@ -28,14 +28,14 @@ namespace PasswordManager.Core.Common.DataModels {
         }
 #pragma warning restore 8618
 #pragma warning restore 8601
-        public static implicit operator Result<A>(A value) => new(value);
+        public static implicit operator Result<A>(A value) => new Result<A>(value);
 
-        public static implicit operator Result<A>(Exception ex) => new(ex);
+        public static implicit operator Result<A>(Exception ex) => new Result<A>(ex);
 
         public static implicit operator Exception(Result<A> result) => ExceptionOrDefault(result.exception);
 
         public static implicit operator Result(Result<A> res) =>
-            res.IsFaulted ? new(ExceptionOrDefault(res.exception)) : new();
+            res.IsFaulted ? new Result(ExceptionOrDefault(res.exception)) : new Result();
 
 
         public bool IsFaulted => State == ResultState.Faulted;
@@ -134,25 +134,20 @@ namespace PasswordManager.Core.Common.DataModels {
         internal readonly ResultState State;
         public readonly Exception? exception;
 
-        public Result() {
-            State = ResultState.Success;
-            exception = null;
-        }
-
         public Result(Exception ex) {
             State = ResultState.Faulted;
             this.exception = ex;
         }
 
-        public static implicit operator Result(bool value) => value ? new() : new(new Exception("Undefined Exception!"));
+        public static implicit operator Result(bool value) => value ? new Result() : new Result(new Exception("Undefined Exception!"));
 
-        public static implicit operator Result(Exception ex) => new(ex);
+        public static implicit operator Result(Exception ex) => new Result(ex);
 
         public static implicit operator Exception(Result result) => ExceptionOrDefault(result.exception);
 
 
         public static implicit operator Result<bool>(Result res) =>
-            res.IsFaulted ? new(ExceptionOrDefault(res.exception)) : new(true);
+            res.IsFaulted ? new Result<bool>(ExceptionOrDefault(res.exception)) : new Result<bool>(true);
 
 
         public bool IsFaulted => State == ResultState.Faulted;
